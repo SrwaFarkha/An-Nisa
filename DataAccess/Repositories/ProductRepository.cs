@@ -23,6 +23,7 @@ namespace DataAccess.Repositories
 				.ToListAsync();
 
 			return products;
+
 		}
 
 		public async Task<Product> GetById(int productId)
