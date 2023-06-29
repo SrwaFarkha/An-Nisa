@@ -8,6 +8,7 @@ using BusinessLogic.Interfaces;
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using DataAccess.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Models.AccountModels;
 using Models.ProductModels;
@@ -178,43 +179,94 @@ namespace BusinessLogic.Services
 
 			return shoppingCartDto;
 
+		}
 
+		public async Task<ShoppingCartDto> AddProductToShoppingCart(AddProductToShoppingCartModel model)
+		{
+			await _accountRepository.AddProductToShoppingCart(model);
 
+			var shoppingCart = await _accountRepository.GetShoppingCartByAccountId(model.AccountId);
 
-			//var shoppingCart = await _accountRepository.GetShoppingCartByAccountId(accountId);
+			var shoppingCartDto = new ShoppingCartDto
+			{
+				Products = shoppingCart.CartItems.Select(item => new CartItemDto
+				{
+					ProductId = item.Product.ProductId,
+					ProductName = item.Product.ProductName,
+					Price = item.Product.Price,
+					Quantity = item.Quantity,
+					TotalProductPrice = item.Quantity * item.Product.Price
+				}).ToList(),
+				ShoppingCartTotalPrice = shoppingCart.CartItems.Sum(item => item.Quantity * item.Product.Price)
+			};
 
-			//var shoppingCartDto = new ShoppingCartDto
-			//{
-			//	Products = shoppingCart.CartItems.Select(item => new CartItemDto
-			//	{
-			//		ProductId = item.Product.ProductId,
-			//		ProductName = item.Product.ProductName,
-			//		Price = item.Product.Price,
-			//		Quantity = item.Quantity,
-			//		TotalProductPrice = item.Quantity * item.Product.Price
-			//	}).ToList(),
-			//	ShoppingCartTotalPrice = shoppingCart.CartItems.Sum(item => item.Quantity * item.Product.Price)
-			//};
+			return shoppingCartDto;
 
-			//return shoppingCartDto;
+		}
 
+		public async Task<string> EmptyShoppingCart(int accountId)
+		{
+			await _accountRepository.EmptyShoppingCart(accountId);
 
+			return "ShoppingCart emptied";
+		}
 
-			//var shoppingCart = await _accountRepository.GetShoppingCartByAccountId(accountId);
+		public async Task<string> IncreaseShoppingCartProduct(int accountId, int productId)
+		{
+			await _accountRepository.IncreaseShoppingCartProduct(accountId, productId);
 
-			//var shoppingCartDto = new ShoppingCartDto
-			//{
-			//	Products = shoppingCart.CartItems.Select(shoppingCart => new CartItemDto
-			//	{
-			//		ProductId = shoppingCart.Product.ProductId,
-			//		ProductName = shoppingCart.Product.ProductName,
-			//		Price = shoppingCart.Product.Price,
-			//		Quantity = shoppingCart.Quantity,
-			//		TotalProductPrice = shoppingCart.Quantity * shoppingCart.Product.Price
-			//	}),
-			//	ShoppingCartTotalPrice = shoppingCart.CartItems.Select(x => x.Quantity * x.Product.Price).Sum()
-			//};
-			//return shoppingCartDto;
+			var account = await _accountRepository.GetAccountById(accountId);
+
+			if (account != null)
+			{
+				var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId);
+				if (product != null)
+				{
+					product.Quantity++;
+					return "Product item increased";
+				}
+				return "Product could not be found";
+			}
+
+			return "Account could not be found";
+
+		}
+
+		public async Task<string> DecreaseShoppingCartProduct(int accountId, int productId)
+		{
+			await _accountRepository.DecreaseShoppingCartProduct(accountId, productId);
+
+			var account = await _accountRepository.GetAccountById(accountId);
+
+			if (account != null)
+			{
+				var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId);
+				if (product != null)
+				{
+					product.Quantity--;
+					return "Product item decreased";
+				}
+				return "Product could not be found";
+			}
+
+			return "Account could not be found";
+		}
+
+		public async Task<string> DeleteCartItemFromShoppingCart(int accountId, int productId)
+		{
+			await _accountRepository.DeleteCartItemFromShoppingCart(accountId, productId);
+
+			var account = await _accountRepository.GetAccountById(accountId);
+			if (account != null)
+			{
+				var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId);
+				if (product != null)
+				{
+					account.ShoppingCart.CartItems.Remove(product); 
+				}
+			}
+			return "Succesfull";
+
 
 		}
 	}

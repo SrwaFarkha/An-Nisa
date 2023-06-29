@@ -20,6 +20,11 @@ namespace DataAccess.Interfaces
 		Task DeleteAccount(int addressId);
 		Task UpdateAddress(int addressId, UpdateAddressModel model);
 		Task<ShoppingCart> GetShoppingCartByAccountId(int accountId);
-		Task AddProductToShoppingCart(AddProductToShoppingCartModel model);
+		Task<ShoppingCart> AddProductToShoppingCart(AddProductToShoppingCartModel model);
+		Task UpdateAccount(Account accountId);
+		Task EmptyShoppingCart(int accountId);
+		Task IncreaseShoppingCartProduct(int accountId, int productId);
+		Task DecreaseShoppingCartProduct(int accountId, int productId);
+		Task DeleteCartItemFromShoppingCart(int accountId, int productId);
 	}
 }

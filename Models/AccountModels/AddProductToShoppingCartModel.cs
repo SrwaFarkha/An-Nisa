@@ -8,7 +8,7 @@ namespace Models.AccountModels
 {
 	public class AddProductToShoppingCartModel
 	{
-		public string AccountId { get; set; }
+		public int AccountId { get; set; }
 		public int ProductId { get; set; }
 		public int Quantity { get; set; }
 	}

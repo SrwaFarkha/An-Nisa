@@ -19,6 +19,10 @@ namespace BusinessLogic.Interfaces
 		Task DeleteAddress(int addressId);
 		Task UpdateAddress(int addressId, UpdateAddressModel model);
 		Task<ShoppingCartDto> GetShoppingCartByAccountId(int accountId);
-		Task<string> AddProductToShoppingCart(AddProductToShoppingCartModel model);
+		Task<ShoppingCartDto> AddProductToShoppingCart(AddProductToShoppingCartModel model);
+		Task<string> EmptyShoppingCart(int accountId);
+		Task<string> IncreaseShoppingCartProduct(int accountId, int productId);
+		Task<string> DecreaseShoppingCartProduct(int accountId, int productId);
+		Task<string> DeleteCartItemFromShoppingCart(int accountId, int productId);
 	}
 }

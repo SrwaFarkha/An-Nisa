@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Models.AccountModels;
 
 namespace DataAccess.Repositories
@@ -116,21 +117,129 @@ namespace DataAccess.Repositories
 				.ThenInclude(x=>x.Product)
 				.FirstOrDefaultAsync(x => x.AccountId == accountId);
 
-			//.Select(x => new ShoppingCartDto
-			//{
-			//	ShoppingCartTotalPrice = x.CartItems.Select(x => x.Quantity * x.Product.Price).Sum(),
-			//	Products = x.CartItems.Select(x => new CartItemDto
-			//	{
-			//		ProductId = x.Product.ProductId,
-			//		ProductName = x.Product.ProductName,
-			//		Price = x.Product.Price,
-			//		Quantity = x.Quantity,
-			//		TotalProductPrice = x.Quantity * x.Product.Price,
-			//	}),
-			//}).FirstOrDefaultAsync();
+			return shoppingCart;
+		}
 
+		public async Task<ShoppingCart> AddProductToShoppingCart(AddProductToShoppingCartModel model)
+		{
+			var shoppingCart = await _dbContext.ShoppingCarts
+				.Include(x => x.CartItems)
+				.ThenInclude(x => x.Product)
+				.FirstOrDefaultAsync(x => x.AccountId == model.AccountId);
+
+			var existingCartItem = shoppingCart.CartItems.FirstOrDefault(item => item.ProductId == model.ProductId);
+
+			if (existingCartItem != null)
+			{
+				// Product already exists, update the quantity
+				existingCartItem.Quantity += model.Quantity;
+			}
+			else
+			{
+				// Product does not exist, create a new cart item
+				var newCartItem = new CartItem
+				{
+					ProductId = model.ProductId,
+					Quantity = model.Quantity
+				};
+
+				shoppingCart.CartItems.Add(newCartItem);
+			}
+
+			await _dbContext.SaveChangesAsync();
+
+
+			//var cartItem = new CartItem
+			//{
+			//	ProductId = model.ProductId,
+			//	Quantity = model.Quantity
+			//};
+
+			//if (shoppingCart != null)
+			//{
+			//	shoppingCart.CartItems.Add(cartItem);
+
+			//	await _dbContext.SaveChangesAsync();
+			//}
 
 			return shoppingCart;
+
+		}
+
+		public Task UpdateAccount(Account accountId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public async Task EmptyShoppingCart(int accountId)
+		{
+			var account = await _dbContext.Accounts
+				.Include(x => x.ShoppingCart)
+				.ThenInclude(x => x.CartItems)
+				.ThenInclude(x => x.Product)
+				.FirstOrDefaultAsync(x => x.AccountId == accountId);
+
+			if (account != null)
+			{
+				account.ShoppingCart.CartItems.Clear();
+
+				await _dbContext.SaveChangesAsync();
+			}
+		}
+
+		public async Task IncreaseShoppingCartProduct(int accountId, int productId)
+		{
+			var account = await _dbContext.Accounts
+				.Include(x => x.ShoppingCart)
+				.ThenInclude(x => x.CartItems)
+				.ThenInclude(x => x.Product)
+				.FirstOrDefaultAsync(x => x.AccountId == accountId);
+
+			var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId);
+
+			if (product != null)
+			{
+				product.Quantity++; // Increase the quantity by 1
+			}
+
+			await _dbContext.SaveChangesAsync();
+
+		}
+
+		public async Task DecreaseShoppingCartProduct(int accountId, int productId)
+		{
+			var account = await _dbContext.Accounts
+				.Include(x => x.ShoppingCart)
+				.ThenInclude(x => x.CartItems)
+				.ThenInclude(x => x.Product)
+				.FirstOrDefaultAsync(x => x.AccountId == accountId);
+
+			var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId);
+
+			if (product != null)
+			{
+				product.Quantity--; // decrease the quantity by 1
+			}
+
+			await _dbContext.SaveChangesAsync();
+		}
+
+		public async Task DeleteCartItemFromShoppingCart(int accountId, int productId)
+		{
+			var account = await _dbContext.Accounts
+				.Include(x => x.ShoppingCart)
+				.ThenInclude(x => x.CartItems)
+				.ThenInclude(x => x.Product)
+				.FirstOrDefaultAsync(x => x.AccountId == accountId);
+
+			var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId);
+
+			if (product != null)
+			{
+				account.ShoppingCart.CartItems.Remove(product);
+			}
+
+			await _dbContext.SaveChangesAsync();
 		}
 	}
 }

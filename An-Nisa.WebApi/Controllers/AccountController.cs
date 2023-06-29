@@ -110,7 +110,38 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok(addedProductToShoppingCart);
 		}
 
+		[HttpPost("shoppingcart/empty/{accountId}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<IActionResult> EmptyShoppingCart(int accountId)
+		{
+			var result = await _accountService.EmptyShoppingCart(accountId);
+			return Ok(result);
+		}
 
+		[HttpPost("shoppingcart/increase/{accountId}/{productId}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<IActionResult> IncreaseQuantity(int accountId, int productId)
+		{
+			var result = await _accountService.IncreaseShoppingCartProduct(accountId, productId);
+			return Ok(result);
+		}
+
+		[HttpPost("shoppingcart/decrease/{accountId}/{productId}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<IActionResult> DecreaseQuantity(int accountId, int productId)
+		{
+			var result = await _accountService.DecreaseShoppingCartProduct(accountId, productId);
+			return Ok(result);
+		}
+
+		[HttpPost("shoppingcart/delete-cartitem/{accountId}/{productId}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<IActionResult> DeleteCartItemFromShoppingCart(int accountId, int productId)
+		{
+			var result = await _accountService.DeleteCartItemFromShoppingCart(accountId, productId);
+			return Ok(result);
+
+		}
 
 	}
 }
