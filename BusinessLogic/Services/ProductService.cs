@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BusinessLogic.Interfaces;
 using DataAccess.Interfaces;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Mvc;
 using Models.ProductModels;
 
 namespace BusinessLogic.Services
@@ -18,8 +19,6 @@ namespace BusinessLogic.Services
 		{
 			_productRepository = productRepository;
 		}
-
-
 		public async Task<List<ProductDto>> GetAll()
 		{
 			var products = await _productRepository.GetAll();
@@ -141,6 +140,47 @@ namespace BusinessLogic.Services
 		public async Task UpdateCategory(int categoryId, UpdateCategoryModel model)
 		{
 			await _productRepository.UpdateCategory(categoryId, model);
+		}
+
+		public async Task<List<CommentDto>> GetCommentsByProductId(int productId)
+		{
+			var comments = await _productRepository.GetCommentsByProductId(productId);
+
+			if (comments == null)
+			{
+				return new List<CommentDto>();
+			}
+
+			var commentsDto = comments.Select(x => new CommentDto
+			{
+				CommentId = x.CommentId,
+				Name = x.Name,
+				Text = x.Text,
+				Rating = x.Rating,
+				Date = x.Date
+			}).ToList();
+
+			return commentsDto;
+		}
+
+		public async Task CreateComment(int productId, CreateCommentModel model)
+		{
+			var newComment = new Comment
+			{
+				Name = model.Name,
+				Text = model.Text,
+				Rating = model.Rating,
+				Date = DateTime.Now,
+				ProductId = productId,
+			};
+
+			await _productRepository.CreateComment(newComment);
+		}
+
+		public async Task DeleteComment(int commentId)
+		{
+			await _productRepository.DeleteComment(commentId);
+
 		}
 	}
 }

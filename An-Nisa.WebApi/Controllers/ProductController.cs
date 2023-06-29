@@ -66,7 +66,7 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok();
 		}
 
-		[HttpGet("getCategories")]
+		[HttpGet("category/get-categories")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> GetCategories()
 		{
@@ -74,7 +74,7 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok(data);
 		}
 
-		[HttpGet("{categoryId:int}/category")]
+		[HttpGet("category/{categoryId:int}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> GetCategoryById(int categoryId)
 		{
@@ -82,7 +82,7 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok(data);
 		}
 
-		[HttpPost("createCategory")]
+		[HttpPost("category/create-category")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> CreateCategory(CreateCategoryModel model)
 		{
@@ -90,7 +90,7 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok();
 		}
 
-		[HttpDelete("{categoryId}/deleteCategory")]
+		[HttpDelete("category/{categoryId}/delete-category")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> DeleteCategory(int categoryId)
 		{
@@ -98,12 +98,37 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok();
 		}
 
-		[HttpPut("{categoryId:int}/updateCategory")]
+		[HttpPut("category/{categoryId:int}/update-category")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> UpdateCategory(int categoryId, UpdateCategoryModel model)
 		{
 			await _productService.UpdateCategory(categoryId, model);
 			return Ok();
 		}
+
+		[HttpGet("comment/{productId:int}", Name = "GetCommentsByProductId")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<ActionResult> GetCommentsByProductId(int productId)
+		{
+			var data = await _productService.GetCommentsByProductId(productId);
+			return Ok(data);
+		}
+
+		[HttpPost("comment/create-comment/{productId:int}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<IActionResult> CreateComment(int productId, CreateCommentModel model)
+		{
+			await _productService.CreateComment(productId, model);
+			return Ok();
+		}
+
+		[HttpDelete("comment/{commentId}/delete-comment")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<IActionResult> DeleteComment(int commentId)
+		{
+			await _productService.DeleteComment(commentId);
+			return Ok();
+		}
+
 	}
 }

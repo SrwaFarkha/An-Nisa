@@ -1,6 +1,4 @@
-﻿
-
-using DataAccess.Interfaces;
+﻿using DataAccess.Interfaces;
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using Models.ProductModels;
@@ -112,6 +110,31 @@ namespace DataAccess.Repositories
 			{
 				categoryFromDb.Name = model.Name;
 			}
+
+			await _dbContext.SaveChangesAsync();
+		}
+
+		public async Task<List<Comment>> GetCommentsByProductId(int productId)
+		{
+			var comments = await _dbContext.Comments
+				.Where(x => x.ProductId == productId)
+				.ToListAsync();
+
+			return comments;
+		}
+
+		public async Task CreateComment(Comment newComment)
+		{
+			await _dbContext.Comments.AddAsync(newComment);
+
+			await _dbContext.SaveChangesAsync();
+		}
+
+		public async Task DeleteComment(int commentId)
+		{
+			var comment = await _dbContext.Comments.FirstOrDefaultAsync(x => x.CommentId == commentId);
+
+			_dbContext.Comments.Remove(comment);
 
 			await _dbContext.SaveChangesAsync();
 		}

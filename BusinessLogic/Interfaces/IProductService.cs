@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Models.ProductModels;
 
 namespace BusinessLogic.Interfaces
@@ -20,5 +21,8 @@ namespace BusinessLogic.Interfaces
 		Task CreateCategory(CreateCategoryModel model);
 		Task DeleteCategory(int id);
 		Task UpdateCategory(int categoryId, UpdateCategoryModel model);
+		Task<List<CommentDto>> GetCommentsByProductId(int productId);
+		Task CreateComment(int productId, CreateCommentModel model);
+		Task DeleteComment(int commentId);
 	}
 }

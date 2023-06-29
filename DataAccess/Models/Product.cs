@@ -12,6 +12,10 @@ namespace DataAccess.Models
 		public int CategoryId { get; set; }
 		public bool Discontinued { get; set; }
 		public virtual Category Category { get; set; }
+		public ICollection<Comment>? Comments { get; set; }
+		public ICollection<CartItem> CartItems { get; set; }
+
+
 
 	}
 }

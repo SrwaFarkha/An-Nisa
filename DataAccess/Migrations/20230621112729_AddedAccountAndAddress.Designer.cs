@@ -4,6 +4,7 @@ using DataAccess.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AnContext))]
-    partial class AnContextModelSnapshot : ModelSnapshot
+    [Migration("20230621112729_AddedAccountAndAddress")]
+    partial class AddedAccountAndAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,32 +98,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.CartItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ShoppingCartId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("ShoppingCartId");
-
-                    b.ToTable("CartItems");
-                });
-
             modelBuilder.Entity("DataAccess.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -170,53 +147,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Order", b =>
-                {
-                    b.Property<int>("OrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("OrderId");
-
-                    b.HasIndex("AccountId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.OrderDetails", b =>
-                {
-                    b.Property<int>("OrderDetailsId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailsId"));
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrderDetailsId");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderDetails");
-                });
-
             modelBuilder.Entity("DataAccess.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -249,25 +179,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.ShoppingCart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId")
-                        .IsUnique();
-
-                    b.ToTable("ShoppingCarts");
-                });
-
             modelBuilder.Entity("DataAccess.Models.Account", b =>
                 {
                     b.HasOne("DataAccess.Models.Address", "Address")
@@ -279,25 +190,6 @@ namespace DataAccess.Migrations
                     b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.CartItem", b =>
-                {
-                    b.HasOne("DataAccess.Models.Product", "Product")
-                        .WithMany("CartItems")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccess.Models.ShoppingCart", "ShoppingCart")
-                        .WithMany("CartItems")
-                        .HasForeignKey("ShoppingCartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("ShoppingCart");
-                });
-
             modelBuilder.Entity("DataAccess.Models.Comment", b =>
                 {
                     b.HasOne("DataAccess.Models.Product", "Product")
@@ -305,36 +197,6 @@ namespace DataAccess.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.Order", b =>
-                {
-                    b.HasOne("DataAccess.Models.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.OrderDetails", b =>
-                {
-                    b.HasOne("DataAccess.Models.Order", "Order")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccess.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
 
                     b.Navigation("Product");
                 });
@@ -350,42 +212,14 @@ namespace DataAccess.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.ShoppingCart", b =>
-                {
-                    b.HasOne("DataAccess.Models.Account", "Account")
-                        .WithOne("ShoppingCart")
-                        .HasForeignKey("DataAccess.Models.ShoppingCart", "AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.Account", b =>
-                {
-                    b.Navigation("ShoppingCart");
-                });
-
             modelBuilder.Entity("DataAccess.Models.Address", b =>
                 {
                     b.Navigation("Accounts");
                 });
 
-            modelBuilder.Entity("DataAccess.Models.Order", b =>
-                {
-                    b.Navigation("OrderDetails");
-                });
-
             modelBuilder.Entity("DataAccess.Models.Product", b =>
                 {
-                    b.Navigation("CartItems");
-
                     b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.ShoppingCart", b =>
-                {
-                    b.Navigation("CartItems");
                 });
 #pragma warning restore 612, 618
         }

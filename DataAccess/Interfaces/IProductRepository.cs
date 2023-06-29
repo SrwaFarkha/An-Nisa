@@ -18,5 +18,8 @@ namespace DataAccess.Interfaces
 		Task CreateCategory(Category category);
 		Task DeleteCategory(int id);
 		Task UpdateCategory(int categoryId, UpdateCategoryModel model);
+		Task<List<Comment>> GetCommentsByProductId(int productId);
+		Task CreateComment(Comment newComment);
+		Task DeleteComment(int commentId);
 	}
 }
