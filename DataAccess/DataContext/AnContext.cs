@@ -22,6 +22,9 @@ namespace DataAccess.DataContext
 
 		public DbSet<OrderDetails> OrderDetails { get; set; }
 
+		public DbSet<SizeStock> SizeStocks { get; set; }
+		public DbSet<ProductDetails> ProductDetails { get; set; }
+
 
 
 

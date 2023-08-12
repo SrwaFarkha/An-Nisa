@@ -17,6 +17,7 @@ namespace DataAccess.Repositories
 		public async Task<List<Product>> GetAll()
 		{
 			var products = await _dbContext.Products
+				.Include(x => x.Images)
 				.Include(x => x.Category)
 				.ToListAsync();
 
@@ -27,7 +28,10 @@ namespace DataAccess.Repositories
 		public async Task<Product> GetById(int productId)
 		{
 			var product = await _dbContext.Products
+				.Include(x => x.Sizes)
+				.Include(x => x.Images)
 				.Include(x => x.Category)
+				.Include(x => x.ProductDetails)
 				.FirstOrDefaultAsync(x => x.ProductId == productId);
 
 			return product;
@@ -36,7 +40,9 @@ namespace DataAccess.Repositories
 		public async Task<Product> GetByName(string name)
 		{
 			var product = await _dbContext.Products
+				.Include(x => x.Images)
 				.Include(x => x.Category)
+				.Include(x => x.ProductDetails)
 				.FirstOrDefaultAsync(x => x.ProductName == name);
 
 			return product;
@@ -63,10 +69,10 @@ namespace DataAccess.Repositories
 			if (productFromDb != null)
 			{
 				productFromDb.ProductName = model.ProductName;
-				productFromDb.ProductDescription = model.ProductDescription;
 				productFromDb.Price = model.Price;
 				productFromDb.CategoryId = model.CategoryId;
 				productFromDb.Discontinued = model.Discontinued;
+
 
 				await _dbContext.SaveChangesAsync();
 			}

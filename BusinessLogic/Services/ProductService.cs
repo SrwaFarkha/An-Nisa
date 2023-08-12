@@ -7,6 +7,8 @@ using BusinessLogic.Interfaces;
 using DataAccess.Interfaces;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
+using Models.ImageModels;
+using Models.ProductDetailsModels;
 using Models.ProductModels;
 
 namespace BusinessLogic.Services
@@ -27,10 +29,15 @@ namespace BusinessLogic.Services
 				{
 					ProductId = x.ProductId,
 					ProductName = x.ProductName,
-					ProductDescription = x.ProductDescription,
 					Price = x.Price,
 					CategoryName = x.Category.Name,
-					Discontinued = x.Discontinued
+					Discontinued = x.Discontinued,
+					Images = x.Images.Select(x => new ImageDto
+					{
+						Id = x.Id,
+						Name = x.Name,
+						Url = x.Url
+					}),
 				}).ToList();
 
 			return productsDto;
@@ -44,10 +51,38 @@ namespace BusinessLogic.Services
 			{
 				ProductId = product.ProductId,
 				ProductName = product.ProductName,
-				ProductDescription = product.ProductDescription,
 				Price = product.Price,
 				CategoryName = product.Category.Name,
-				Discontinued = product.Discontinued
+				Discontinued = product.Discontinued,
+				Sizes = product.Sizes.Select(x => new SizeStockDto
+				{
+					SizeStockId = x.SizeStockId,
+					Size = x.Size,
+					StockBalance = x.StockBalance
+				}),
+				Images = product.Images.Select(x => new ImageDto
+				{
+					Id = x.Id,
+					Name = x.Name,
+					Url = x.Url
+				}),
+				ProductDetails = product.ProductDetails == null ? new ProductDetailsDto() :  new ProductDetailsDto
+				{
+					Id = product.ProductDetails.Id,
+					Material = product.ProductDetails.Material,
+					Fabric = product.ProductDetails.Fabric,
+					CareAdvice = product.ProductDetails.CareAdvice,
+					Belt = product.ProductDetails.Belt,
+					Zipper = product.ProductDetails.Zipper,
+					ArticleNumber = product.ProductDetails.ArticleNumber,
+					OurModel = product.ProductDetails.OurModel,
+					Fit = product.ProductDetails.Fit,
+					Arm = product.ProductDetails.Arm,
+					Lenght = product.ProductDetails.Lenght,
+					ModelSize = product.ProductDetails.ModelSize,
+					Details = product.ProductDetails.Details,
+					Color = product.ProductDetails.Color
+				}
 			};
 
 			return productDto;
@@ -61,10 +96,32 @@ namespace BusinessLogic.Services
 			{
 				ProductId = product.ProductId,
 				ProductName = product.ProductName,
-				ProductDescription = product.ProductDescription,
 				Price = product.Price,
 				CategoryName = product.Category.Name,
-				Discontinued = product.Discontinued
+				Discontinued = product.Discontinued,
+				Images = product.Images.Select(x => new ImageDto
+				{
+					Id = x.Id,
+					Name = x.Name,
+					Url = x.Url
+				}),
+				ProductDetails = product.ProductDetails == null ? new ProductDetailsDto() : new ProductDetailsDto
+				{
+					Id = product.ProductDetails.Id,
+					Material = product.ProductDetails.Material,
+					Fabric = product.ProductDetails.Fabric,
+					CareAdvice = product.ProductDetails.CareAdvice,
+					Belt = product.ProductDetails.Belt,
+					Zipper = product.ProductDetails.Zipper,
+					ArticleNumber = product.ProductDetails.ArticleNumber,
+					OurModel = product.ProductDetails.OurModel,
+					Fit = product.ProductDetails.Fit,
+					Arm = product.ProductDetails.Arm,
+					Lenght = product.ProductDetails.Lenght,
+					ModelSize = product.ProductDetails.ModelSize,
+					Details = product.ProductDetails.Details,
+					Color = product.ProductDetails.Color
+				}
 			};
 
 			return productDto;
@@ -75,7 +132,6 @@ namespace BusinessLogic.Services
 			var newProduct = new Product
 			{
 				ProductName = model.ProductName,
-				ProductDescription = model.ProductDescription,
 				Price = model.Price,
 				Discontinued = false,
 				CategoryId = model.CategoryId
