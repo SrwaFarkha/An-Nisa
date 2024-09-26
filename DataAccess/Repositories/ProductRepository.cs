@@ -1,6 +1,4 @@
-﻿
-
-using DataAccess.Interfaces;
+﻿using DataAccess.Interfaces;
 using DatabaseModels.DataContext;
 using DatabaseModels.Models;
 using Microsoft.EntityFrameworkCore;
