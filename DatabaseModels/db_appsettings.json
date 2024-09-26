@@ -1,0 +1,14 @@
+{
+  "ConnectionStrings": {
+    //"DefaultConnection": "Server=localhost;Database=An-Nisa;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=true",
+    "DefaultConnection": "Server=localhost;Database=AnNisa;User Id=myuser;Password=mypassword;SslMode=None;"
+
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}

@@ -1,4 +1,4 @@
-﻿namespace Models.ProductModels
+﻿namespace SharedModels.ProductModels
 {
     public class ProductDto
     {

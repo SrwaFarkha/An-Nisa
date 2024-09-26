@@ -1,7 +1,5 @@
-﻿
-
-using DataAccess.Models;
-using Models.ProductModels;
+﻿using DatabaseModels.Models;
+using SharedModels.ProductModels;
 
 namespace DataAccess.Interfaces
 {

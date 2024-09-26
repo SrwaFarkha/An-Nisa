@@ -1,17 +1,19 @@
 ﻿
 
 using DataAccess.Interfaces;
-using DataAccess.Models;
+using DatabaseModels.DataContext;
+using DatabaseModels.Models;
 using Microsoft.EntityFrameworkCore;
-using Models.ProductModels;
+using SharedModels.ProductModels;
+
 
 namespace DataAccess.Repositories
 {
 	public class ProductRepository : IProductRepository
 	{
-		private readonly DataContext.AnContext _dbContext;
+		private readonly AnContext _dbContext;
 
-		public ProductRepository(DataContext.AnContext dbContext)
+		public ProductRepository(AnContext dbContext)
 		{
 			_dbContext = dbContext;
 		}

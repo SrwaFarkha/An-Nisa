@@ -1,7 +1,7 @@
 ﻿
 using BusinessLogic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Models.ProductModels;
+using SharedModels.ProductModels;
 
 namespace An_Nisa.WebApi.Controllers
 {

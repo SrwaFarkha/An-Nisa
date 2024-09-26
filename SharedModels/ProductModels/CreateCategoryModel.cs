@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.ProductModels
+namespace SharedModels.ProductModels
 {
-	public class UpdateCategoryModel
+	public class CreateCategoryModel
 	{
 		public string Name { get; set; }
 	}

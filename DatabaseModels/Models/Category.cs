@@ -1,4 +1,4 @@
-﻿namespace DataAccess.Models
+﻿namespace DatabaseModels.Models
 {
 	public class Category
 	{

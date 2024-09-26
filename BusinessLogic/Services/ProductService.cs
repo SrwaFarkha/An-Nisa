@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Interfaces;
 using DataAccess.Interfaces;
-using DataAccess.Models;
-using Models.ProductModels;
+using DatabaseModels.Models;
+using SharedModels.ProductModels;
 
 namespace BusinessLogic.Services
 {
