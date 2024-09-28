@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\DatabaseModels\DatabaseModels.csproj" />
     <ProjectReference Include="..\SharedModels\SharedModels.csproj" />
   </ItemGroup>
 

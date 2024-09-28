@@ -1,8 +1,6 @@
 {
   "ConnectionStrings": {
-    //"DefaultConnection": "Server=localhost;Database=An-Nisa;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=true",
-    "DefaultConnection": "Server=localhost;Database=AnNisa;User Id=myuser;Password=mypassword;SslMode=None;"
-
+    "DefaultConnection": "server=localhost;port=3307;database=al-isha;user=root;password=Cargospace24;default command timeout=12000;"
   },
   "Logging": {
     "LogLevel": {

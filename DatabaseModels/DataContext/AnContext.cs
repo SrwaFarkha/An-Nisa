@@ -20,10 +20,6 @@ namespace DatabaseModels.DataContext
         public DbSet<SizeStock> SizeStocks { get; set; }
         public DbSet<ProductDetails> ProductDetails { get; set; }
 
-
-        // Default constructor
-        public AnContext() { }
-
         // Constructor for dependency injection
         public AnContext(DbContextOptions<AnContext> options) : base(options) { }
 
