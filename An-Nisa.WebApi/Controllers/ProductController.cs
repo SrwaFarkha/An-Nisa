@@ -66,7 +66,7 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok();
 		}
 
-		[HttpGet("getCategories")]
+		[HttpGet("get-categories")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> GetCategories()
 		{

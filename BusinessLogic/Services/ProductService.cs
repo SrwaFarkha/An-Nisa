@@ -58,7 +58,7 @@ namespace BusinessLogic.Services
 		{
 			var product = await _productRepository.GetByName(name);
 
-			var productDto = new ProductDto
+			var productDto = product == null ? new ProductDto() : new ProductDto
 			{
 				ProductId = product.ProductId,
 				ProductName = product.ProductName,
