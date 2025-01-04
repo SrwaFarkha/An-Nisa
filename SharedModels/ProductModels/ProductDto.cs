@@ -1,4 +1,6 @@
-﻿namespace SharedModels.ProductModels
+﻿using SharedModels.ImageModels;
+
+namespace SharedModels.ProductModels
 {
     public class ProductDto
     {
@@ -9,5 +11,7 @@
         public decimal Price { get; set; }
         public string CategoryName { get; set; }
         public bool Discontinued { get; set; }
+        public List<ImageDto> Images { get; set;}
+        public List<SizeStockDto> SizeStocks { get; set; }
     }
 }

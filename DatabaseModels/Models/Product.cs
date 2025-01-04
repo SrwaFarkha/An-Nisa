@@ -12,6 +12,10 @@ namespace DatabaseModels.Models
 		public int CategoryId { get; set; }
 		public bool Discontinued { get; set; }
 		public virtual Category Category { get; set; }
+        public ICollection<Image> Images { get; set; }
+        public ICollection<SizeStock> SizeStocks { get; set; }
 
-	}
+
+
+    }
 }

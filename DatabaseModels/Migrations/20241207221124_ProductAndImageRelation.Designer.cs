@@ -4,6 +4,7 @@ using DatabaseModels.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseModels.Migrations
 {
     [DbContext(typeof(AnContext))]
-    partial class AnContextModelSnapshot : ModelSnapshot
+    [Migration("20241207221124_ProductAndImageRelation")]
+    partial class ProductAndImageRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,7 +66,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.ToTable("Accounts", (string)null);
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.Address", b =>
@@ -92,7 +95,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasKey("AddressId");
 
-                    b.ToTable("Addresses", (string)null);
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.CartItem", b =>
@@ -118,7 +121,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("ShoppingCartId");
 
-                    b.ToTable("CartItems", (string)null);
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.Category", b =>
@@ -135,7 +138,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.Comment", b =>
@@ -167,7 +170,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.Image", b =>
@@ -193,7 +196,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Image", (string)null);
+                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.Order", b =>
@@ -214,7 +217,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.OrderDetails", b =>
@@ -240,7 +243,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderDetails", (string)null);
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.Product", b =>
@@ -272,7 +275,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.ProductDetails", b =>
@@ -342,7 +345,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductDetails", (string)null);
+                    b.ToTable("ProductDetails");
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.ShoppingCart", b =>
@@ -361,7 +364,7 @@ namespace DatabaseModels.Migrations
                     b.HasIndex("AccountId")
                         .IsUnique();
 
-                    b.ToTable("ShoppingCarts", (string)null);
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.SizeStock", b =>
@@ -386,7 +389,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("SizeStocks", (string)null);
+                    b.ToTable("SizeStocks");
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.Account", b =>

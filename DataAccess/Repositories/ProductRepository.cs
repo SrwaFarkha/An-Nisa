@@ -20,6 +20,8 @@ namespace DataAccess.Repositories
 		{
 			var products = await _dbContext.Products
 				.Include(x => x.Category)
+				.Include(x => x.Images)
+				.Include(x => x.SizeStocks)
 				.ToListAsync();
 
 			return products;
@@ -29,7 +31,9 @@ namespace DataAccess.Repositories
 		{
 			var product = await _dbContext.Products
 				.Include(x => x.Category)
-				.FirstOrDefaultAsync(x => x.ProductId == productId);
+                .Include(x => x.Images)
+
+                .FirstOrDefaultAsync(x => x.ProductId == productId);
 
 			return product;
 		}
@@ -38,7 +42,9 @@ namespace DataAccess.Repositories
 		{
 			var product = await _dbContext.Products
 				.Include(x => x.Category)
-				.FirstOrDefaultAsync(x => x.ProductName == name);
+                .Include(x => x.Images)
+
+                .FirstOrDefaultAsync(x => x.ProductName == name);
 
 			return product;
 		}

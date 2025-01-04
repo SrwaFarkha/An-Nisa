@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.Interfaces;
 using DataAccess.Interfaces;
 using DatabaseModels.Models;
+using SharedModels.ImageModels;
 using SharedModels.ProductModels;
 
 namespace BusinessLogic.Services
@@ -31,8 +33,10 @@ namespace BusinessLogic.Services
 					ProductDescription = x.ProductDescription,
 					Price = x.Price,
 					CategoryName = x.Category.Name,
-					Discontinued = x.Discontinued
-				}).ToList();
+					Discontinued = x.Discontinued,
+					Images = x.Images == null ? new List<ImageDto>() : x.Images.Select(i => new ImageDto { Id = i.Id, Name = i.Name, Url = i.Url}).ToList(),
+					SizeStocks = x.SizeStocks == null ? new List<SizeStockDto>() : x.SizeStocks.Select(i => new SizeStockDto { SizeStockId  = i.SizeStockId , Size  = i.Size , StockBalance  = i.StockBalance }).ToList(),
+			}).ToList();
 
 			return productsDto;
 		}
@@ -48,8 +52,10 @@ namespace BusinessLogic.Services
 				ProductDescription = product.ProductDescription,
 				Price = product.Price,
 				CategoryName = product.Category.Name,
-				Discontinued = product.Discontinued
-			};
+				Discontinued = product.Discontinued,
+				Images = product.Images == null ? new List<ImageDto>() : product.Images.Select(i => new ImageDto { Id = i.Id, Name = i.Name, Url = i.Url }).ToList(),
+
+            };
 
 			return productDto;
 		}
@@ -65,8 +71,10 @@ namespace BusinessLogic.Services
 				ProductDescription = product.ProductDescription,
 				Price = product.Price,
 				CategoryName = product.Category.Name,
-				Discontinued = product.Discontinued
-			};
+				Discontinued = product.Discontinued,
+                Images = product.Images == null ? new List<ImageDto>() : product.Images.Select(i => new ImageDto { Id = i.Id, Name = i.Name, Url = i.Url }).ToList(),
+
+            };
 
 			return productDto;
 		}
@@ -79,8 +87,8 @@ namespace BusinessLogic.Services
 				ProductDescription = model.ProductDescription,
 				Price = model.Price,
 				Discontinued = false,
-				CategoryId = model.CategoryId
-			};
+				CategoryId = model.CategoryId,
+            };
 
 			await _productRepository.CreateProduct(newProduct);
 		}
