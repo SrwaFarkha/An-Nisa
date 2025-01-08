@@ -54,6 +54,7 @@ namespace BusinessLogic.Services
 				CategoryName = product.Category.Name,
 				Discontinued = product.Discontinued,
 				Images = product.Images == null ? new List<ImageDto>() : product.Images.Select(i => new ImageDto { Id = i.Id, Name = i.Name, Url = i.Url }).ToList(),
+                SizeStocks = product.SizeStocks == null ? new List<SizeStockDto>() : product.SizeStocks.Select(i => new SizeStockDto { SizeStockId = i.SizeStockId, Size = i.Size, StockBalance = i.StockBalance }).ToList(),
 
             };
 

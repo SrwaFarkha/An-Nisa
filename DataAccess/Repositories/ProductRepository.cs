@@ -32,6 +32,7 @@ namespace DataAccess.Repositories
 			var product = await _dbContext.Products
 				.Include(x => x.Category)
                 .Include(x => x.Images)
+                .Include(x => x.SizeStocks)
 
                 .FirstOrDefaultAsync(x => x.ProductId == productId);
 
