@@ -19,6 +19,11 @@ namespace DatabaseModels.DataContext
 
         public DbSet<SizeStock> SizeStocks { get; set; }
         public DbSet<ProductDetails> ProductDetails { get; set; }
+        public DbSet<Description> Descriptions { get; set; }
+        public DbSet<ProductInformation> ProductInformations { get; set; }
+        public DbSet<CareAndAdvice> CareAndAdvices { get; set; }
+
+
 
         // Constructor for dependency injection
         public AnContext(DbContextOptions<AnContext> options) : base(options) { }
@@ -27,6 +32,20 @@ namespace DatabaseModels.DataContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<CareAndAdvice>()
+               .HasOne(ca => ca.ProductDetails)
+               .WithOne(pd => pd.CareAndAdvice)
+               .HasForeignKey<CareAndAdvice>(ca => ca.ProductDetailsId);
+
+            modelBuilder.Entity<ProductInformation>()
+               .HasOne(pi => pi.ProductDetails)
+               .WithOne(pd => pd.ProductInformation)
+               .HasForeignKey<ProductInformation>(pi => pi.ProductDetailsId); 
+
+            modelBuilder.Entity<Description>()
+                .HasOne(d => d.ProductDetails)
+                .WithOne(pd => pd.Description)
+                .HasForeignKey<Description>(d => d.ProductDetailsId);
         }
     }
 }
