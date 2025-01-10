@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseModels.Migrations
 {
     [DbContext(typeof(AnContext))]
-    [Migration("20250109103314_AddedDatabaseModelForDescriptionAndProductInformationAndCareAndAdvice")]
+    [Migration("20250110101723_AddedDatabaseModelForDescriptionAndProductInformationAndCareAndAdvice")]
     partial class AddedDatabaseModelForDescriptionAndProductInformationAndCareAndAdvice
     {
         /// <inheritdoc />
@@ -107,7 +107,6 @@ namespace DatabaseModels.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CareAdvice")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("ProductDetailsId")
@@ -205,19 +204,15 @@ namespace DatabaseModels.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Fabric")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Material")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("ModelSize")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("OurModel")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("ProductDetailsId")
@@ -370,7 +365,6 @@ namespace DatabaseModels.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Arm")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("ArticleNumber")
@@ -378,30 +372,24 @@ namespace DatabaseModels.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Belt")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Color")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Details")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Fit")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Lenght")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("ProductDetailsId")
                         .HasColumnType("int");
 
                     b.Property<string>("Zipper")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");

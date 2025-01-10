@@ -14,7 +14,7 @@ namespace SharedModels.ProductDetailsModels
         public string? Arm { get; set; }
         public string? Lenght { get; set; }
         public string? Zipper { get; set; }
-        public string? ArticleNumber { get; set; }
+        public string ArticleNumber { get; set; }
         public string? Belt { get; set; }
         public string? Details { get; set; }
         public int ProductDetailsId { get; set; }

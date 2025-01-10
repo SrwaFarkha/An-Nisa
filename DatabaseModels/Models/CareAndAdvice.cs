@@ -11,7 +11,7 @@ namespace DatabaseModels.Models
     {
         [Key]
         public int Id { get; set; }
-        public string CareAdvice { get; set; }
+        public string? CareAdvice { get; set; }
         public int ProductDetailsId { get; set; }
         public virtual ProductDetails ProductDetails { get; set; } = null!;
     }

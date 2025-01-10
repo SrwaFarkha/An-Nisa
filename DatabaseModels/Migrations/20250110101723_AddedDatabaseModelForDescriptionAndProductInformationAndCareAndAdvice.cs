@@ -114,7 +114,7 @@ namespace DatabaseModels.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    CareAdvice = table.Column<string>(type: "longtext", nullable: false)
+                    CareAdvice = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ProductDetailsId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -136,13 +136,13 @@ namespace DatabaseModels.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Material = table.Column<string>(type: "longtext", nullable: false)
+                    Material = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Fabric = table.Column<string>(type: "longtext", nullable: false)
+                    Fabric = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    OurModel = table.Column<string>(type: "longtext", nullable: false)
+                    OurModel = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ModelSize = table.Column<string>(type: "longtext", nullable: false)
+                    ModelSize = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ProductDetailsId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -164,21 +164,21 @@ namespace DatabaseModels.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Color = table.Column<string>(type: "longtext", nullable: false)
+                    Color = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Fit = table.Column<string>(type: "longtext", nullable: false)
+                    Fit = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Arm = table.Column<string>(type: "longtext", nullable: false)
+                    Arm = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Lenght = table.Column<string>(type: "longtext", nullable: false)
+                    Lenght = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Zipper = table.Column<string>(type: "longtext", nullable: false)
+                    Zipper = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ArticleNumber = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Belt = table.Column<string>(type: "longtext", nullable: false)
+                    Belt = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Details = table.Column<string>(type: "longtext", nullable: false)
+                    Details = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ProductDetailsId = table.Column<int>(type: "int", nullable: false)
                 },
