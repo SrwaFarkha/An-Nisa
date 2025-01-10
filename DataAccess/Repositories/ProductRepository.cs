@@ -22,7 +22,11 @@ namespace DataAccess.Repositories
 				.Include(x => x.Category)
 				.Include(x => x.Images)
 				.Include(x => x.SizeStocks)
-				.ToListAsync();
+                .Include(x => x.ProductDetails)
+                .ThenInclude(pd => pd.CareAndAdvice)
+                .Include(x => x.ProductDetails.ProductInformation) 
+                .Include(x => x.ProductDetails.Description) 
+                .ToListAsync();
 
 			return products;
 		}

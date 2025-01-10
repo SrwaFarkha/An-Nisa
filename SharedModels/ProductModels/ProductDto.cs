@@ -1,4 +1,5 @@
 ﻿using SharedModels.ImageModels;
+using SharedModels.ProductDetailsModels;
 
 namespace SharedModels.ProductModels
 {
@@ -13,5 +14,7 @@ namespace SharedModels.ProductModels
         public bool Discontinued { get; set; }
         public List<ImageDto> Images { get; set;}
         public List<SizeStockDto> SizeStocks { get; set; }
+        public ProductDetailsDto? ProductDetails { get; set; }
+
     }
 }

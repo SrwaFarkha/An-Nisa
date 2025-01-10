@@ -8,6 +8,7 @@ using BusinessLogic.Interfaces;
 using DataAccess.Interfaces;
 using DatabaseModels.Models;
 using SharedModels.ImageModels;
+using SharedModels.ProductDetailsModels;
 using SharedModels.ProductModels;
 
 namespace BusinessLogic.Services
@@ -21,27 +22,77 @@ namespace BusinessLogic.Services
 			_productRepository = productRepository;
 		}
 
+        public async Task<List<ProductDto>> GetAll()
+        {
+            var products = await _productRepository.GetAll();
 
-		public async Task<List<ProductDto>> GetAll()
-		{
-			var products = await _productRepository.GetAll();
-			
-			var productsDto = products.Select(x => new ProductDto
-				{
-					ProductId = x.ProductId,
-					ProductName = x.ProductName,
-					ProductDescription = x.ProductDescription,
-					Price = x.Price,
-					CategoryName = x.Category.Name,
-					Discontinued = x.Discontinued,
-					Images = x.Images == null ? new List<ImageDto>() : x.Images.Select(i => new ImageDto { Id = i.Id, Name = i.Name, Url = i.Url}).ToList(),
-					SizeStocks = x.SizeStocks == null ? new List<SizeStockDto>() : x.SizeStocks.Select(i => new SizeStockDto { SizeStockId  = i.SizeStockId , Size  = i.Size , StockBalance  = i.StockBalance }).ToList(),
-			}).ToList();
+            var productsDto = products.Select(x => new ProductDto
+            {
+                ProductId = x.ProductId,
+                ProductName = x.ProductName,
+                ProductDescription = x.ProductDescription,
+                Price = x.Price,
+                CategoryName = x.Category.Name,
+                Discontinued = x.Discontinued,
+                Images = x.Images?.Select(i => new ImageDto
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Url = i.Url
+                }).ToList(),
+                SizeStocks = x.SizeStocks?.Select(i => new SizeStockDto
+                {
+                    SizeStockId = i.SizeStockId,
+                    Size = i.Size,
+                    StockBalance = i.StockBalance
+                }).ToList(),
+                ProductDetails = x.ProductDetails == null ? null : new ProductDetailsDto
+                {
+                    Id = x.ProductDetails.Id,
+                    ProductId = x.ProductDetails.ProductId,
+                    CareAndAdviceId = x.ProductDetails.CareAndAdviceId,
+                    ProductInformationId = x.ProductDetails.ProductInformationId,
+                    DescriptionId = x.ProductDetails.DescriptionId,
+                    CareAndAdvice = x.ProductDetails.CareAndAdvice == null ? null : new CareAndAdviceDto
+                    {
+                        Id = x.ProductDetails.CareAndAdvice.Id,
+                        CareAdvice = x.ProductDetails.CareAndAdvice.CareAdvice,
+                        ProductDetailsId = x.ProductDetails.CareAndAdvice.ProductDetailsId
+                    },
+                    ProductInformation = x.ProductDetails.ProductInformation == null ? null : new ProductInformationDto
+                    {
+                        Id = x.ProductDetails.ProductInformation.Id,
+                        Color = x.ProductDetails.ProductInformation.Color,
+                        Fit = x.ProductDetails.ProductInformation.Fit,
+                        Arm = x.ProductDetails.ProductInformation.Arm,
+                        Lenght = x.ProductDetails.ProductInformation.Lenght,
+                        Zipper = x.ProductDetails.ProductInformation.Zipper,
+                        ArticleNumber = x.ProductDetails.ProductInformation.ArticleNumber,
+                        Belt = x.ProductDetails.ProductInformation.Belt,
+                        Details = x.ProductDetails.ProductInformation.Details,
+                        ProductDetailsId = x.ProductDetails.ProductInformation.ProductDetailsId
 
-			return productsDto;
-		}
 
-		public async Task<ProductDto> GetById(int productId)
+                    },
+                    Description = x.ProductDetails.Description == null ? null : new DescriptionDto
+                    {
+                        Id = x.ProductDetails.Description.Id,
+                        Material = x.ProductDetails.Description.Material,
+                        Fabric = x.ProductDetails.Description.Fabric,
+                        OurModel = x.ProductDetails.Description.OurModel,
+                        ModelSize = x.ProductDetails.Description.ModelSize,
+						ProductDetailsId = x.ProductDetails.Description.ProductDetailsId
+                    }
+                }
+            }).ToList();
+
+            return productsDto;
+        }
+
+
+
+
+        public async Task<ProductDto> GetById(int productId)
 		{
 			var product = await _productRepository.GetById(productId);
 

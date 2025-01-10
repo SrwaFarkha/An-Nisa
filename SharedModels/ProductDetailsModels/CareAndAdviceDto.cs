@@ -9,7 +9,7 @@ namespace SharedModels.ProductDetailsModels
     public class CareAndAdviceDto
     {
         public int Id { get; set; }
-        public string CareAdvice { get; set; }
+        public string? CareAdvice { get; set; }
         public int ProductDetailsId { get; set; }
     }
 }
