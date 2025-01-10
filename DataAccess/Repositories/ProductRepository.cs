@@ -37,7 +37,10 @@ namespace DataAccess.Repositories
 				.Include(x => x.Category)
                 .Include(x => x.Images)
                 .Include(x => x.SizeStocks)
-
+                .Include(x => x.ProductDetails)
+                .ThenInclude(pd => pd.CareAndAdvice)
+                .Include(x => x.ProductDetails.ProductInformation)
+                .Include(x => x.ProductDetails.Description)
                 .FirstOrDefaultAsync(x => x.ProductId == productId);
 
 			return product;
@@ -48,7 +51,11 @@ namespace DataAccess.Repositories
 			var product = await _dbContext.Products
 				.Include(x => x.Category)
                 .Include(x => x.Images)
-
+                .Include(x => x.SizeStocks)
+                .Include(x => x.ProductDetails)
+                .ThenInclude(pd => pd.CareAndAdvice)
+                .Include(x => x.ProductDetails.ProductInformation)
+                .Include(x => x.ProductDetails.Description)
                 .FirstOrDefaultAsync(x => x.ProductName == name);
 
 			return product;

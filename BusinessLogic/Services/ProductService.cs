@@ -96,17 +96,54 @@ namespace BusinessLogic.Services
 		{
 			var product = await _productRepository.GetById(productId);
 
-			var productDto = new ProductDto
-			{
-				ProductId = product.ProductId,
-				ProductName = product.ProductName,
-				ProductDescription = product.ProductDescription,
-				Price = product.Price,
-				CategoryName = product.Category.Name,
-				Discontinued = product.Discontinued,
-				Images = product.Images == null ? new List<ImageDto>() : product.Images.Select(i => new ImageDto { Id = i.Id, Name = i.Name, Url = i.Url }).ToList(),
+            var productDto = new ProductDto
+            {
+                ProductId = product.ProductId,
+                ProductName = product.ProductName,
+                ProductDescription = product.ProductDescription,
+                Price = product.Price,
+                CategoryName = product.Category.Name,
+                Discontinued = product.Discontinued,
+                Images = product.Images == null ? new List<ImageDto>() : product.Images.Select(i => new ImageDto { Id = i.Id, Name = i.Name, Url = i.Url }).ToList(),
                 SizeStocks = product.SizeStocks == null ? new List<SizeStockDto>() : product.SizeStocks.Select(i => new SizeStockDto { SizeStockId = i.SizeStockId, Size = i.Size, StockBalance = i.StockBalance }).ToList(),
+                ProductDetails = product.ProductDetails == null ? null : new ProductDetailsDto
+                {
+                    Id = product.ProductDetails.Id,
+                    ProductId = product.ProductDetails.ProductId,
+                    CareAndAdviceId = product.ProductDetails.CareAndAdviceId,
+                    ProductInformationId = product.ProductDetails.ProductInformationId,
+                    DescriptionId = product.ProductDetails.DescriptionId,
+                    CareAndAdvice = product.ProductDetails.CareAndAdvice == null ? null : new CareAndAdviceDto
+                    {
+                        Id = product.ProductDetails.CareAndAdvice.Id,
+                        CareAdvice = product.ProductDetails.CareAndAdvice.CareAdvice,
+                        ProductDetailsId = product.ProductDetails.CareAndAdvice.ProductDetailsId
+                    },
+                    ProductInformation = product.ProductDetails.ProductInformation == null ? null : new ProductInformationDto
+                    {
+                        Id = product.ProductDetails.ProductInformation.Id,
+                        Color = product.ProductDetails.ProductInformation.Color,
+                        Fit = product.ProductDetails.ProductInformation.Fit,
+                        Arm = product.ProductDetails.ProductInformation.Arm,
+                        Lenght = product.ProductDetails.ProductInformation.Lenght,
+                        Zipper = product.ProductDetails.ProductInformation.Zipper,
+                        ArticleNumber = product.ProductDetails.ProductInformation.ArticleNumber,
+                        Belt = product.ProductDetails.ProductInformation.Belt,
+                        Details = product.ProductDetails.ProductInformation.Details,
+                        ProductDetailsId = product.ProductDetails.ProductInformation.ProductDetailsId
 
+
+                    },
+                    Description = product.ProductDetails.Description == null ? null : new DescriptionDto
+                    {
+                        Id = product.ProductDetails.Description.Id,
+                        Material = product.ProductDetails.Description.Material,
+                        Fabric = product.ProductDetails.Description.Fabric,
+                        OurModel = product.ProductDetails.Description.OurModel,
+                        ModelSize = product.ProductDetails.Description.ModelSize,
+                        ProductDetailsId = product.ProductDetails.Description.ProductDetailsId
+                    }
+                }
             };
 
 			return productDto;
@@ -125,7 +162,45 @@ namespace BusinessLogic.Services
 				CategoryName = product.Category.Name,
 				Discontinued = product.Discontinued,
                 Images = product.Images == null ? new List<ImageDto>() : product.Images.Select(i => new ImageDto { Id = i.Id, Name = i.Name, Url = i.Url }).ToList(),
+                SizeStocks = product.SizeStocks == null ? new List<SizeStockDto>() : product.SizeStocks.Select(i => new SizeStockDto { SizeStockId = i.SizeStockId, Size = i.Size, StockBalance = i.StockBalance }).ToList(),
+                ProductDetails = product.ProductDetails == null ? null : new ProductDetailsDto
+                {
+                    Id = product.ProductDetails.Id,
+                    ProductId = product.ProductDetails.ProductId,
+                    CareAndAdviceId = product.ProductDetails.CareAndAdviceId,
+                    ProductInformationId = product.ProductDetails.ProductInformationId,
+                    DescriptionId = product.ProductDetails.DescriptionId,
+                    CareAndAdvice = product.ProductDetails.CareAndAdvice == null ? null : new CareAndAdviceDto
+                    {
+                        Id = product.ProductDetails.CareAndAdvice.Id,
+                        CareAdvice = product.ProductDetails.CareAndAdvice.CareAdvice,
+                        ProductDetailsId = product.ProductDetails.CareAndAdvice.ProductDetailsId
+                    },
+                    ProductInformation = product.ProductDetails.ProductInformation == null ? null : new ProductInformationDto
+                    {
+                        Id = product.ProductDetails.ProductInformation.Id,
+                        Color = product.ProductDetails.ProductInformation.Color,
+                        Fit = product.ProductDetails.ProductInformation.Fit,
+                        Arm = product.ProductDetails.ProductInformation.Arm,
+                        Lenght = product.ProductDetails.ProductInformation.Lenght,
+                        Zipper = product.ProductDetails.ProductInformation.Zipper,
+                        ArticleNumber = product.ProductDetails.ProductInformation.ArticleNumber,
+                        Belt = product.ProductDetails.ProductInformation.Belt,
+                        Details = product.ProductDetails.ProductInformation.Details,
+                        ProductDetailsId = product.ProductDetails.ProductInformation.ProductDetailsId
 
+
+                    },
+                    Description = product.ProductDetails.Description == null ? null : new DescriptionDto
+                    {
+                        Id = product.ProductDetails.Description.Id,
+                        Material = product.ProductDetails.Description.Material,
+                        Fabric = product.ProductDetails.Description.Fabric,
+                        OurModel = product.ProductDetails.Description.OurModel,
+                        ModelSize = product.ProductDetails.Description.ModelSize,
+                        ProductDetailsId = product.ProductDetails.Description.ProductDetailsId
+                    }
+                }
             };
 
 			return productDto;
