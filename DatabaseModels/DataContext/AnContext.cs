@@ -22,6 +22,8 @@ namespace DatabaseModels.DataContext
         public DbSet<Description> Descriptions { get; set; }
         public DbSet<ProductInformation> ProductInformations { get; set; }
         public DbSet<CareAndAdvice> CareAndAdvices { get; set; }
+        public DbSet<EmailRequest> EmailRequests { get; set; }
+
 
 
 
