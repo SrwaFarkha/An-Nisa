@@ -63,7 +63,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Accounts", (string)null);
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.Address", b =>
@@ -92,7 +92,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasKey("AddressId");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.CareAndAdvice", b =>
@@ -114,7 +114,7 @@ namespace DatabaseModels.Migrations
                     b.HasIndex("ProductDetailsId")
                         .IsUnique();
 
-                    b.ToTable("CareAndAdvices");
+                    b.ToTable("CareAndAdvices", (string)null);
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.CartItem", b =>
@@ -140,7 +140,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("ShoppingCartId");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("CartItems", (string)null);
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.Category", b =>
@@ -157,7 +157,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.Comment", b =>
@@ -189,7 +189,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.Description", b =>
@@ -220,39 +220,7 @@ namespace DatabaseModels.Migrations
                     b.HasIndex("ProductDetailsId")
                         .IsUnique();
 
-                    b.ToTable("Descriptions");
-                });
-
-            modelBuilder.Entity("DatabaseModels.Models.EmailRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("SentAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EmailRequests");
+                    b.ToTable("Descriptions", (string)null);
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.Image", b =>
@@ -278,7 +246,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Image");
+                    b.ToTable("Image", (string)null);
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.Order", b =>
@@ -299,7 +267,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.OrderDetails", b =>
@@ -325,7 +293,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderDetails");
+                    b.ToTable("OrderDetails", (string)null);
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.Product", b =>
@@ -360,7 +328,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.ProductDetails", b =>
@@ -382,7 +350,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductDetails");
+                    b.ToTable("ProductDetails", (string)null);
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.ProductInformation", b =>
@@ -426,7 +394,7 @@ namespace DatabaseModels.Migrations
                     b.HasIndex("ProductDetailsId")
                         .IsUnique();
 
-                    b.ToTable("ProductInformations");
+                    b.ToTable("ProductInformations", (string)null);
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.ShoppingCart", b =>
@@ -445,7 +413,7 @@ namespace DatabaseModels.Migrations
                     b.HasIndex("AccountId")
                         .IsUnique();
 
-                    b.ToTable("ShoppingCarts");
+                    b.ToTable("ShoppingCarts", (string)null);
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.SizeStock", b =>
@@ -470,7 +438,7 @@ namespace DatabaseModels.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("SizeStocks");
+                    b.ToTable("SizeStocks", (string)null);
                 });
 
             modelBuilder.Entity("DatabaseModels.Models.Account", b =>
