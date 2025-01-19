@@ -115,55 +115,77 @@ namespace DataAccess.Repositories
 				.Include(x=> x.CartItems)
 				.ThenInclude(x=>x.Product)
 				.FirstOrDefaultAsync(x => x.AccountId == accountId);
+            if (shoppingCart == null)
+            {
+                throw new Exception($"Shopping cart not found for account ID {accountId}");
+            }
 
-			return shoppingCart;
+            return shoppingCart;
 		}
 
 		public async Task<ShoppingCart> AddProductToShoppingCart(AddProductToShoppingCartModel model)
 		{
-			var shoppingCart = await _dbContext.ShoppingCarts
-				.Include(x => x.CartItems)
-				.ThenInclude(x => x.Product)
-				.FirstOrDefaultAsync(x => x.AccountId == model.AccountId);
+            var shoppingCart = await _dbContext.ShoppingCarts
+                .Include(x => x.CartItems)
+                .ThenInclude(x => x.Product)
+                .FirstOrDefaultAsync(x => x.AccountId == model.AccountId);
 
-			var existingCartItem = shoppingCart.CartItems.FirstOrDefault(item => item.ProductId == model.ProductId);
+            if (shoppingCart == null)
+            {
+                shoppingCart = new ShoppingCart
+                {
+                    AccountId = model.AccountId,
+                    CartItems = new List<CartItem>()
+                };
 
-			if (existingCartItem != null)
-			{
-				// Product already exists, update the quantity
-				existingCartItem.Quantity += model.Quantity;
-			}
-			else
-			{
-				// Product does not exist, create a new cart item
-				var newCartItem = new CartItem
-				{
-					ProductId = model.ProductId,
-					Quantity = model.Quantity
-				};
+                _dbContext.ShoppingCarts.Add(shoppingCart);
+                await _dbContext.SaveChangesAsync();
+            }
 
-				shoppingCart.CartItems.Add(newCartItem);
-			}
+            var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.ProductId == model.ProductId);
+            if (product == null)
+            {
+                throw new Exception($"Product with ID {model.ProductId} not found.");
+            }
 
-			await _dbContext.SaveChangesAsync();
+            var existingCartItem = shoppingCart.CartItems.FirstOrDefault(item => item.ProductId == model.ProductId);
+
+            if (existingCartItem != null)
+            {
+                existingCartItem.Quantity += model.Quantity;
+            }
+            else
+            {
+                var newCartItem = new CartItem
+                {
+                    ProductId = model.ProductId,
+                    Quantity = model.Quantity,
+                    ShoppingCartId = shoppingCart.Id 
+                };
+
+                shoppingCart.CartItems.Add(newCartItem);
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            return shoppingCart;
 
 
-			//var cartItem = new CartItem
-			//{
-			//	ProductId = model.ProductId,
-			//	Quantity = model.Quantity
-			//};
+            //var cartItem = new CartItem
+            //{
+            //	ProductId = model.ProductId,
+            //	Quantity = model.Quantity
+            //};
 
-			//if (shoppingCart != null)
-			//{
-			//	shoppingCart.CartItems.Add(cartItem);
+            //if (shoppingCart != null)
+            //{
+            //	shoppingCart.CartItems.Add(cartItem);
 
-			//	await _dbContext.SaveChangesAsync();
-			//}
+            //	await _dbContext.SaveChangesAsync();
+            //}
 
-			return shoppingCart;
 
-		}
+        }
 
 		public Task UpdateAccount(Account accountId)
 		{
