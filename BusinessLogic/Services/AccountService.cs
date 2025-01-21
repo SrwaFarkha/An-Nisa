@@ -168,6 +168,8 @@ namespace BusinessLogic.Services
 					ProductName = item.Product.ProductName,
 					Price = item.Product.Price,
 					Quantity = item.Quantity,
+					Size = item.Size,
+
 					TotalProductPrice = item.Quantity * item.Product.Price
 				}).ToList(),
 				ShoppingCartTotalPrice = shoppingCart.CartItems.Sum(item => item.Quantity * item.Product.Price)
@@ -191,6 +193,7 @@ namespace BusinessLogic.Services
 					ProductName = item.Product.ProductName,
 					Price = item.Product.Price,
 					Quantity = item.Quantity,
+					Size = item.Size,
 					TotalProductPrice = item.Quantity * item.Product.Price
 				}).ToList(),
 				ShoppingCartTotalPrice = shoppingCart.CartItems.Sum(item => item.Quantity * item.Product.Price)

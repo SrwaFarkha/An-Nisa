@@ -148,7 +148,8 @@ namespace DataAccess.Repositories
                 throw new Exception($"Product with ID {model.ProductId} not found.");
             }
 
-            var existingCartItem = shoppingCart.CartItems.FirstOrDefault(item => item.ProductId == model.ProductId);
+            var existingCartItem = shoppingCart.CartItems.FirstOrDefault(item =>
+                  item.ProductId == model.ProductId && item.Size == model.Size);
 
             if (existingCartItem != null)
             {
@@ -160,6 +161,7 @@ namespace DataAccess.Repositories
                 {
                     ProductId = model.ProductId,
                     Quantity = model.Quantity,
+                    Size = model.Size,
                     ShoppingCartId = shoppingCart.Id 
                 };
 

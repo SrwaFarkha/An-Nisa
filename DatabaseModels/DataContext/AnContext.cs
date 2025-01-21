@@ -1,5 +1,6 @@
 ﻿using DatabaseModels.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 
 namespace DatabaseModels.DataContext
 {
@@ -47,6 +48,7 @@ namespace DatabaseModels.DataContext
                 .HasOne(d => d.ProductDetails)
                 .WithOne(pd => pd.Description)
                 .HasForeignKey<Description>(d => d.ProductDetailsId);
+
         }
     }
 }
