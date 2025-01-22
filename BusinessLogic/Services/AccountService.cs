@@ -19,7 +19,26 @@ namespace BusinessLogic.Services
 		{
 			_accountRepository = accountRepository;
 		}
-		public async Task<List<AccountDto>> GetAllAccounts()
+
+        public AccountDto? Authenticate(string email, string password)
+        {
+            var user = _accountRepository.GetAccountByEmail(email);
+
+            // Compare passwords (assumes stored passwords are hashed)
+            if (user != null && VerifyPassword(password, user.Password))
+            {
+                return user;
+            }
+
+            return null;
+        }
+
+        private bool VerifyPassword(string enteredPassword, string storedHashedPassword)
+        {
+            // Replace with your preferred password hashing library
+            return BCrypt.Net.BCrypt.Verify(enteredPassword, storedHashedPassword);
+        }
+        public async Task<List<AccountDto>> GetAllAccounts()
 		{
 			var accounts = await _accountRepository.GetAllAccounts();
 
@@ -48,15 +67,18 @@ namespace BusinessLogic.Services
 
 		public async Task CreateAccount(CreateAccountModel model)
 		{
-			var newAccount = new Account
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(model.Password);
+
+
+            var newAccount = new Account
 			{
 				FirstName = model.FirstName,
 				LastName = model.LastName,
 				Email = model.Email,
 				PhoneNumber = model.PhoneNumber,
 				CreatedOn = DateTime.Now,
-				Password = model.Password,
-				Address = new Address
+                Password = hashedPassword,
+                Address = new Address
 				{
 					Country = model.Address.Country,
 					City = model.Address.City,

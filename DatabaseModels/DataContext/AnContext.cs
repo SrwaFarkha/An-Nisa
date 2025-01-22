@@ -27,6 +27,7 @@ namespace DatabaseModels.DataContext
 
 
 
+
         // Constructor for dependency injection
         public AnContext(DbContextOptions<AnContext> options) : base(options) { }
 

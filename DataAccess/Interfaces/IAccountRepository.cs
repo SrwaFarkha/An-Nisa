@@ -10,7 +10,9 @@ namespace DataAccess.Interfaces
 {
 	public interface IAccountRepository
 	{
-		Task<List<Account>> GetAllAccounts();
+		AccountDto GetAccountByEmail(string email);
+
+        Task<List<Account>> GetAllAccounts();
 		Task CreateAccount(Account newAccount);
 		Task UpdateAccount(int accountId, UpdateAccountModel model);
 		Task<Account> GetAccountById(int accountId);

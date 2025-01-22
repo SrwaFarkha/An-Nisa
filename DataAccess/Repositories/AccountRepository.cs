@@ -18,7 +18,23 @@ namespace DataAccess.Repositories
 		{
 			_dbContext = dbContext;
 		}
-		public async Task<List<Account>> GetAllAccounts()
+
+        public AccountDto GetAccountByEmail(string email)
+        {
+            // Fetch user from the database
+            var account = _dbContext.Accounts
+				.Where(a => a.Email.ToLower() == email.ToLower()) // Perform case-insensitive comparison
+				.Select(a => new AccountDto
+				{
+					Email = a.Email,
+					Password = a.Password, // Store hashed passwords in the database
+					IsAdmin = a.IsAdmin
+				})
+				.FirstOrDefault();	
+
+            return account;
+        }
+        public async Task<List<Account>> GetAllAccounts()
 		{
 			var accounts = await _dbContext.Accounts
 				.Include(x => x.Address)

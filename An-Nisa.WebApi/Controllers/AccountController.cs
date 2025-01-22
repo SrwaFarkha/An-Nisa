@@ -1,24 +1,76 @@
 ﻿using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
+using DatabaseModels.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using SharedModels.AccountModels;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace An_Nisa.WebApi.Controllers
 {
 	[Route("api/account")]
 	[ApiController]
+	
 	public class AccountController : ControllerBase
 	{
 		private readonly IAccountService _accountService;
+        private readonly IConfiguration _configuration;
 
-		public AccountController(IAccountService accountService)
-		{
+        public AccountController(IAccountService accountService, IConfiguration configuration)
+        {
 			_accountService = accountService;
+            _configuration = configuration;
+
+
+        }
+
+		[AllowAnonymous]
+		[HttpPost("login")]
+		public IActionResult Login([FromBody] LoginDto login)
+		{
+			var user = Authenticate(login);
+			if (user != null)
+			{
+				var token = Generate(user);
+				return Ok(token);
+			}
+			return NotFound("User not found");
 		}
 
-		[HttpGet]
+        private string Generate(AccountDto user)
+        {
+			var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+			var credentials = new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha256);
+
+			var claims = new[]
+			{
+				new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.IsAdmin ? "Admin" : "User"),
+            };
+
+			var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],
+				_configuration["Jwt:Audience"],
+				claims,
+				expires: DateTime.UtcNow.AddMinutes(15),
+				signingCredentials: credentials);
+
+			return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private AccountDto? Authenticate(LoginDto login)
+        {
+            return _accountService.Authenticate(login.Email, login.Password);
+		}
+
+
+        [HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public async Task<IActionResult> GetAllAccounts()
+        [Authorize]
+        public async Task<IActionResult> GetAllAccounts()
 		{
 			var data = await _accountService.GetAllAccounts();
 

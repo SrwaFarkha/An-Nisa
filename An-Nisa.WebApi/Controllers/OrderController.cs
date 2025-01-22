@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedModels.OrderModels;
 
@@ -6,7 +7,7 @@ namespace An_Nisa.WebApi.Controllers
 {
 	[Route("api/order")]
 	[ApiController]
-	public class OrderController : ControllerBase
+    public class OrderController : ControllerBase
 	{
 		private readonly IOrderService _orderService;
 
