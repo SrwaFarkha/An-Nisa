@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace DatabaseModels.Models
 {
 	public class CartItem
@@ -14,7 +13,7 @@ namespace DatabaseModels.Models
 		public int ProductId { get; set; }
 
 		public int Quantity { get; set; }
-        public Enums.Enums.Size Size { get; set; }
+        public DatabaseEnums.DatabaseEnums.Size Size { get; set; }
 
 
         public ShoppingCart ShoppingCart { get; set; }

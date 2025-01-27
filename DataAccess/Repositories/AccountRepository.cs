@@ -19,10 +19,9 @@ namespace DataAccess.Repositories
 			_dbContext = dbContext;
 		}
 
-        public AccountDto GetAccountByEmail(string email)
+        public async Task<AccountDto> GetAccountByEmail(string email)
         {
-            // Fetch user from the database
-            var account = _dbContext.Accounts
+            var account = await _dbContext.Accounts
 				.Where(a => a.Email.ToLower() == email.ToLower()) // Perform case-insensitive comparison
 				.Select(a => new AccountDto
 				{
@@ -30,7 +29,7 @@ namespace DataAccess.Repositories
 					Password = a.Password, // Store hashed passwords in the database
 					IsAdmin = a.IsAdmin
 				})
-				.FirstOrDefault();	
+				.FirstOrDefaultAsync();	
 
             return account;
         }

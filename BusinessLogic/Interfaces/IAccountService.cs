@@ -9,7 +9,6 @@ namespace BusinessLogic.Interfaces
 {
 	public interface IAccountService
 	{
-        AccountDto? Authenticate(string email, string password);
 
         Task<List<AccountDto>> GetAllAccounts();
 		Task CreateAccount(CreateAccountModel model);

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatabaseModels.Enums
+namespace DatabaseModels.DatabaseEnums
 {
-    public class Enums
+    public class DatabaseEnums
     {
         public enum Size
         {

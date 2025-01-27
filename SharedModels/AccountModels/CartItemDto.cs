@@ -1,4 +1,4 @@
-﻿using DatabaseModels.Enums;
+﻿using DatabaseModels.DatabaseEnums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace SharedModels.AccountModels
 		public string ProductName { get; set; }
 		public decimal Price { get; set; }
 		public int Quantity { get; set; }
-		public Enums.Size Size {get;set;}
+		public DatabaseEnums.Size Size {get;set;}
 		public decimal TotalProductPrice { get; set; }
 	}
 }

@@ -20,24 +20,6 @@ namespace BusinessLogic.Services
 			_accountRepository = accountRepository;
 		}
 
-        public AccountDto? Authenticate(string email, string password)
-        {
-            var user = _accountRepository.GetAccountByEmail(email);
-
-            // Compare passwords (assumes stored passwords are hashed)
-            if (user != null && VerifyPassword(password, user.Password))
-            {
-                return user;
-            }
-
-            return null;
-        }
-
-        private bool VerifyPassword(string enteredPassword, string storedHashedPassword)
-        {
-            // Replace with your preferred password hashing library
-            return BCrypt.Net.BCrypt.Verify(enteredPassword, storedHashedPassword);
-        }
         public async Task<List<AccountDto>> GetAllAccounts()
 		{
 			var accounts = await _accountRepository.GetAllAccounts();

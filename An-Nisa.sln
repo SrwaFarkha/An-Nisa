@@ -5,13 +5,13 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseModels", "DatabaseModels\DatabaseModels.csproj", "{6A0458F1-CD10-46FB-8BEE-AE626D0612D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{99131141-0B50-481F-B41C-5B290B2721FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{99131141-0B50-481F-B41C-5B290B2721FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "An-Nisa.WebApi", "An-Nisa.WebApi\An-Nisa.WebApi.csproj", "{ABD743AC-211D-47F8-82AC-D4FDEA2C3814}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "An-Nisa.WebApi", "An-Nisa.WebApi\An-Nisa.WebApi.csproj", "{ABD743AC-211D-47F8-82AC-D4FDEA2C3814}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{47259FDF-43AE-4514-AF8A-7A9E5843E9B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{47259FDF-43AE-4514-AF8A-7A9E5843E9B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModels", "SharedModels\SharedModels.csproj", "{AE6C6C4E-FFA6-4B73-9A3A-B413003BA72F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedModels", "SharedModels\SharedModels.csproj", "{AE6C6C4E-FFA6-4B73-9A3A-B413003BA72F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

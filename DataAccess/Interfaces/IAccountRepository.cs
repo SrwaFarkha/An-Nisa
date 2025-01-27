@@ -10,7 +10,7 @@ namespace DataAccess.Interfaces
 {
 	public interface IAccountRepository
 	{
-		AccountDto GetAccountByEmail(string email);
+		Task<AccountDto> GetAccountByEmail(string email);
 
         Task<List<Account>> GetAllAccounts();
 		Task CreateAccount(Account newAccount);
