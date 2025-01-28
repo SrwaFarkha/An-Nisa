@@ -1,6 +1,5 @@
 ﻿using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
-using Internal.Models.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -32,14 +31,16 @@ namespace An_Nisa.WebApi.Controllers
         {
             var token = await _jwtService.GetToken(login);
 
-            if (token.IsSuccessful)
+            if (!String.IsNullOrEmpty(token))
             {
-                var tokenResponse = new { token = token.ResponseObject };
+                var tokenResponse = new { token = token };
 
                 return Ok(tokenResponse);
             }
+            
 
-            return NotFound(new { message = "User not found" });
+            return NotFound();
+
         }
 
 

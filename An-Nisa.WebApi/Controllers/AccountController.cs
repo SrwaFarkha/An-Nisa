@@ -20,7 +20,6 @@ namespace An_Nisa.WebApi.Controllers
 
         [HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-        [Authorize]
         public async Task<IActionResult> GetAllAccounts()
 		{
 			var data = await _accountService.GetAllAccounts();

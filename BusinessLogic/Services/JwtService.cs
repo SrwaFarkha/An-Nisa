@@ -11,7 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Internal.Models.Common;
 using SharedModels.Enums;
 
 namespace BusinessLogic.Services
@@ -29,7 +28,7 @@ namespace BusinessLogic.Services
 
         }
 
-        public async Task<GenericActionResponse<string>> GetToken(LoginDto login)
+        public async Task<string?> GetToken(LoginDto login)
         {
             var user = await _accountRepository.GetAccountByEmail(login.Email);
 
@@ -50,11 +49,11 @@ namespace BusinessLogic.Services
                     expires: DateTime.UtcNow.AddDays(1),
                     signingCredentials: credentials);
 
-                return new GenericActionResponse<string>(new JwtSecurityTokenHandler().WriteToken(token));
+                return new JwtSecurityTokenHandler().WriteToken(token);
 
             }
 
-            return new GenericActionResponse<string>("Login failed");
+            return null;
         }
 
         private bool VerifyPassword(string enteredPassword, string storedHashedPassword)

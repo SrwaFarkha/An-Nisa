@@ -1,5 +1,4 @@
-﻿using Internal.Models.Common;
-using SharedModels.AccountModels;
+﻿using SharedModels.AccountModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +9,6 @@ namespace BusinessLogic.Interfaces
 {
     public interface IJwtService
     {
-        Task<GenericActionResponse<string>> GetToken(LoginDto login);
+        Task<string?> GetToken(LoginDto login);
     }
 }
