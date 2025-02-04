@@ -13,8 +13,9 @@ namespace DataAccess.Interfaces
 		Task<AccountDto> GetAccountByEmail(string email);
 
         Task<List<Account>> GetAllAccounts();
-		Task CreateAccount(Account newAccount);
-		Task UpdateAccount(int accountId, UpdateAccountModel model);
+		Task<bool> CreateAccount(Account newAccount);
+
+        Task UpdateAccount(int accountId, UpdateAccountModel model);
 		Task<Account> GetAccountById(int accountId);
 		Task<List<Address>> GetAddresses();
 		Task<Address> GetAddressById(int addressId);

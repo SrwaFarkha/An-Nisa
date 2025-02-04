@@ -32,9 +32,21 @@ namespace An_Nisa.WebApi.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> CreateAccount(CreateAccountModel model)
 		{
-			await _accountService.CreateAccount(model);
-			return Ok();
-		}
+			var result = await _accountService.CreateAccount(model);
+
+			if (result)
+			{
+                return Ok();
+
+            }
+			else
+			{
+				return BadRequest();
+			}
+        }
+
+
+
 
 		[HttpPut("{accountId:int}/update")]
 		[ProducesResponseType(StatusCodes.Status200OK)]

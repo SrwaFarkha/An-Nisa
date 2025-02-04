@@ -47,7 +47,7 @@ namespace BusinessLogic.Services
 			return accountsDto;
 		}
 
-		public async Task CreateAccount(CreateAccountModel model)
+		public async Task<bool> CreateAccount(CreateAccountModel model)
 		{
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(model.Password);
 
@@ -69,7 +69,17 @@ namespace BusinessLogic.Services
 				}
 			};
 
-			await _accountRepository.CreateAccount(newAccount);
+            var isAccountCreated = await _accountRepository.CreateAccount(newAccount);
+
+			if (isAccountCreated)
+			{
+                return true;
+
+            }
+			else
+			{
+				return false;
+			}
 		}
 
 		public async Task UpdateAccount(int accountId, UpdateAccountModel model)

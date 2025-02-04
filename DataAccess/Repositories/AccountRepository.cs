@@ -43,13 +43,22 @@ namespace DataAccess.Repositories
 
 		}
 
-		public async Task CreateAccount(Account newAccount)
-		{
-			await _dbContext.Accounts.AddAsync(newAccount);
-			await _dbContext.SaveChangesAsync();
-		}
+        public async Task<bool> CreateAccount(Account newAccount)
+        {
+            try
+            {
+                await _dbContext.Accounts.AddAsync(newAccount);
+                int result = await _dbContext.SaveChangesAsync();
+                return result > 0;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
 
-		public async Task UpdateAccount(int accountId, UpdateAccountModel model)
+
+        public async Task UpdateAccount(int accountId, UpdateAccountModel model)
 		{
 			var accountFromDb = await _dbContext.Accounts.Include(x => x.Address )
 				.FirstOrDefaultAsync(x => x.AccountId == accountId);

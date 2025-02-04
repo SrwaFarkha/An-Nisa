@@ -11,7 +11,7 @@ namespace BusinessLogic.Interfaces
 	{
 
         Task<List<AccountDto>> GetAllAccounts();
-		Task CreateAccount(CreateAccountModel model);
+        Task<bool> CreateAccount(CreateAccountModel model);
 		Task UpdateAccount(int accountId, UpdateAccountModel model);
 		Task<AccountDto> GetAccountById(int accountId);
 		Task<List<AddressDto>> GetAddresses();
