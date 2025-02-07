@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Interfaces;
+using BusinessLogic.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,9 +14,11 @@ namespace An_Nisa.WebApi.Controllers
 	public class AccountController : ControllerBase
 	{
 		private readonly IAccountService _accountService;
-        public AccountController(IAccountService accountService)
+		private readonly IJwtService _jwtService;
+        public AccountController(IAccountService accountService, IJwtService jwtService)
         {
 			_accountService = accountService;
+			_jwtService = jwtService;
         }
 
         [HttpGet]
@@ -26,29 +29,35 @@ namespace An_Nisa.WebApi.Controllers
 
 			return Ok(data);
 		}
+    
 
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> CreateAccount(CreateAccountModel model)
+        {
+            var accountCreated = await _accountService.CreateAccount(model);
 
-		[HttpPost]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		public async Task<IActionResult> CreateAccount(CreateAccountModel model)
-		{
-			var result = await _accountService.CreateAccount(model);
+            if (accountCreated)
+            {
+                var loginDto = new LoginDto { Email = model.Email, Password = model.Password };
+                var token = await _jwtService.GetToken(loginDto);
 
-			if (result)
-			{
-                return Ok();
+                if (!string.IsNullOrEmpty(token))
+                {
+                    return Ok(new { token });
+                }
 
+                return BadRequest("Account created, but failed to generate token.");
             }
-			else
-			{
-				return BadRequest();
-			}
+
+            return BadRequest("Account creation failed.");
         }
 
 
 
 
-		[HttpPut("{accountId:int}/update")]
+
+        [HttpPut("{accountId:int}/update")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> UpdateAccount(int accountId, UpdateAccountModel model)
 		{
