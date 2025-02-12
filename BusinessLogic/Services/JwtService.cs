@@ -41,7 +41,10 @@ namespace BusinessLogic.Services
                 var claims = new[]
                 {
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.IsAdmin ? "Admin" : "User"),};
+                new Claim(ClaimTypes.Role, user.IsAdmin ? "Admin" : "User"),
+                new Claim("accountId", user.AccountId.ToString())
+                };
+
 
                 var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],
                     _configuration["Jwt:Audience"],

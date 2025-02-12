@@ -21,6 +21,7 @@ namespace An_Nisa.WebApi.Controllers
 			_jwtService = jwtService;
         }
 
+        [Authorize]
         [HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllAccounts()
@@ -56,7 +57,7 @@ namespace An_Nisa.WebApi.Controllers
 
 
 
-
+        [Authorize]
         [HttpPut("{accountId:int}/update")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> UpdateAccount(int accountId, UpdateAccountModel model)
@@ -65,7 +66,8 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok();
 		}
 
-		[HttpGet("{accountId:int}", Name = "GetAccountById")]
+        [Authorize]
+        [HttpGet("{accountId:int}", Name = "GetAccountById")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> GetAccountById(int accountId)
 		{
@@ -73,7 +75,8 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok(data);
 		}
 
-		[HttpGet("address/get-addresses")]
+        [Authorize]
+        [HttpGet("address/get-addresses")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> GetAddresses()
 		{
@@ -81,7 +84,8 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok(data);
 		}
 
-		[HttpGet("address/{addressId:int}")]
+        [Authorize]
+        [HttpGet("address/{addressId:int}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> GetAddressById(int addressId)
 		{
@@ -97,7 +101,8 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok();
 		}
 
-		[HttpDelete("address/{addressId}/delete-address")]
+        [Authorize]
+        [HttpDelete("address/{addressId}/delete-address")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> DeleteAddress(int addressId)
 		{
@@ -105,7 +110,9 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok();
 		}
 
-		[HttpPut("address/{addressId:int}/update-address")]
+
+        [Authorize]
+        [HttpPut("address/{addressId:int}/update-address")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> UpdateAddress(int addressId, UpdateAddressModel model)
 		{
@@ -113,7 +120,8 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok();
 		}
 
-		[HttpGet("shoppingcart/{accountId}", Name = "GetShoppingCartByAccountId")]
+        [Authorize]
+        [HttpGet("shoppingcart/{accountId}", Name = "GetShoppingCartByAccountId")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> GetShoppingCartByAccountId(int accountId)
 		{
@@ -122,8 +130,8 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok(data);
 		}
 
-
-		[HttpPost("shoppingcart/add", Name = "AddProductToShoppingCart")]
+        
+        [HttpPost("shoppingcart/add", Name = "AddProductToShoppingCart")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> AddProductToShoppingCart([FromBody] AddProductToShoppingCartModel model)
 		{
@@ -132,7 +140,8 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok(addedProductToShoppingCart);
 		}
 
-		[HttpPost("shoppingcart/empty/{accountId}")]
+        [Authorize]
+        [HttpPost("shoppingcart/empty/{accountId}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> EmptyShoppingCart(int accountId)
 		{
@@ -140,7 +149,8 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok(result);
 		}
 
-		[HttpPost("shoppingcart/increase/{accountId}/{productId}")]
+        [Authorize]
+        [HttpPost("shoppingcart/increase/{accountId}/{productId}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> IncreaseQuantity(int accountId, int productId)
 		{
@@ -148,7 +158,8 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok(result);
 		}
 
-		[HttpPost("shoppingcart/decrease/{accountId}/{productId}")]
+        [Authorize]
+        [HttpPost("shoppingcart/decrease/{accountId}/{productId}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> DecreaseQuantity(int accountId, int productId)
 		{
@@ -156,7 +167,8 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok(result);
 		}
 
-		[HttpPost("shoppingcart/delete-cartitem/{accountId}/{productId}")]
+        [Authorize]
+        [HttpPost("shoppingcart/delete-cartitem/{accountId}/{productId}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> DeleteCartItemFromShoppingCart(int accountId, int productId)
 		{

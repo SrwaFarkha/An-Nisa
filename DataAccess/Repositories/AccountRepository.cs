@@ -22,12 +22,14 @@ namespace DataAccess.Repositories
         public async Task<AccountDto> GetAccountByEmail(string email)
         {
             var account = await _dbContext.Accounts
-				.Where(a => a.Email.ToLower() == email.ToLower()) // Perform case-insensitive comparison
+				.Where(a => a.Email.ToLower() == email.ToLower())
 				.Select(a => new AccountDto
 				{
+					AccountId = a.AccountId,
 					Email = a.Email,
-					Password = a.Password, // Store hashed passwords in the database
-					IsAdmin = a.IsAdmin
+					Password = a.Password,
+					IsAdmin = a.IsAdmin,
+
 				})
 				.FirstOrDefaultAsync();	
 
