@@ -183,8 +183,10 @@ namespace BusinessLogic.Services
 					Price = item.Product.Price,
 					Quantity = item.Quantity,
 					Size = item.Size,
+                    Color = item.Product.ProductDetails?.ProductInformation?.Color,
+                    ImageUrl = item.Product.Images.FirstOrDefault()?.Url,  
 
-					TotalProductPrice = item.Quantity * item.Product.Price
+                    TotalProductPrice = item.Quantity * item.Product.Price
 				}).ToList(),
 				ShoppingCartTotalPrice = shoppingCart.CartItems.Sum(item => item.Quantity * item.Product.Price)
 			};

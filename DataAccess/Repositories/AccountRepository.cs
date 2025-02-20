@@ -138,9 +138,15 @@ namespace DataAccess.Repositories
 		public async Task<ShoppingCart> GetShoppingCartByAccountId(int accountId)
 		{
 			var shoppingCart = await _dbContext.ShoppingCarts
-				.Include(x=> x.CartItems)
-				.ThenInclude(x=>x.Product)
-				.FirstOrDefaultAsync(x => x.AccountId == accountId);
+				.Include(x => x.CartItems)
+				.ThenInclude(x => x.Product)
+                .ThenInclude(product => product.ProductDetails)
+				.ThenInclude(details => details.ProductInformation)
+                    .Include(x => x.CartItems)
+                .ThenInclude(x => x.Product)
+				.ThenInclude(x => x.Images)
+                .FirstOrDefaultAsync(x => x.AccountId == accountId);
+
             if (shoppingCart == null)
             {
                 throw new Exception($"Shopping cart not found for account ID {accountId}");

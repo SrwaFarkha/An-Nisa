@@ -15,5 +15,7 @@ namespace SharedModels.AccountModels
 		public int Quantity { get; set; }
 		public DatabaseEnums.Size Size {get;set;}
 		public decimal TotalProductPrice { get; set; }
-	}
+		public string Color { get; set; }
+		public string ImageUrl { get; set; }
+		}
 }

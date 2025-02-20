@@ -32,7 +32,6 @@ namespace BusinessLogic.Services
         {
             var user = await _accountRepository.GetAccountByEmail(login.Email);
 
-            // Compare passwords (assumes stored passwords are hashed)
             if (user != null && VerifyPassword(login.Password, user.Password))
             {
                 var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
@@ -61,7 +60,6 @@ namespace BusinessLogic.Services
 
         private bool VerifyPassword(string enteredPassword, string storedHashedPassword)
         {
-            // Replace with your preferred password hashing library
             return BCrypt.Net.BCrypt.Verify(enteredPassword, storedHashedPassword);
         }
     }
