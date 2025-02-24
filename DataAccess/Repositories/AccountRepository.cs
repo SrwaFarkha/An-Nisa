@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DatabaseModels.DataContext;
 using DatabaseModels.Models;
 using SharedModels.AccountModels;
+using DatabaseModels.DatabaseEnums;
 namespace DataAccess.Repositories
 {
 	public class AccountRepository : IAccountRepository
@@ -242,7 +243,7 @@ namespace DataAccess.Repositories
 			}
 		}
 
-		public async Task IncreaseShoppingCartProduct(int accountId, int productId)
+		public async Task IncreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size)
 		{
 			var account = await _dbContext.Accounts
 				.Include(x => x.ShoppingCart)
@@ -250,18 +251,18 @@ namespace DataAccess.Repositories
 				.ThenInclude(x => x.Product)
 				.FirstOrDefaultAsync(x => x.AccountId == accountId);
 
-			var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId);
+			var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId && x.Size == size);
 
 			if (product != null)
 			{
-				product.Quantity++; // Increase the quantity by 1
+				product.Quantity++;
 			}
 
 			await _dbContext.SaveChangesAsync();
 
 		}
 
-		public async Task DecreaseShoppingCartProduct(int accountId, int productId)
+		public async Task DecreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size)
 		{
 			var account = await _dbContext.Accounts
 				.Include(x => x.ShoppingCart)
@@ -269,17 +270,17 @@ namespace DataAccess.Repositories
 				.ThenInclude(x => x.Product)
 				.FirstOrDefaultAsync(x => x.AccountId == accountId);
 
-			var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId);
+			var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId && x.Size == size);
 
 			if (product != null)
 			{
-				product.Quantity--; // decrease the quantity by 1
+				product.Quantity--;
 			}
 
 			await _dbContext.SaveChangesAsync();
 		}
 
-		public async Task DeleteCartItemFromShoppingCart(int accountId, int productId)
+		public async Task DeleteCartItemFromShoppingCart(int accountId, int productId, DatabaseEnums.Size size)
 		{
 			var account = await _dbContext.Accounts
 				.Include(x => x.ShoppingCart)
@@ -287,7 +288,7 @@ namespace DataAccess.Repositories
 				.ThenInclude(x => x.Product)
 				.FirstOrDefaultAsync(x => x.AccountId == accountId);
 
-			var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId);
+			var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId && x.Size == size);
 
 			if (product != null)
 			{

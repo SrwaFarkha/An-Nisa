@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DatabaseModels.DatabaseEnums;
 using SharedModels.AccountModels;
 
 namespace BusinessLogic.Interfaces
@@ -22,8 +23,8 @@ namespace BusinessLogic.Interfaces
 		Task<ShoppingCartDto> GetShoppingCartByAccountId(int accountId);
 		Task<ShoppingCartDto> AddProductToShoppingCart(AddProductToShoppingCartModel model);
 		Task<string> EmptyShoppingCart(int accountId);
-		Task<string> IncreaseShoppingCartProduct(int accountId, int productId);
-		Task<string> DecreaseShoppingCartProduct(int accountId, int productId);
-		Task<string> DeleteCartItemFromShoppingCart(int accountId, int productId);
+		Task<string> IncreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size);
+		Task<string> DecreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size);
+		Task<string> DeleteCartItemFromShoppingCart(int accountId, int productId, DatabaseEnums.Size size);
 	}
 }

@@ -8,6 +8,7 @@ using DatabaseModels.Models;
 using BusinessLogic.Interfaces;
 using DataAccess.Interfaces;
 using SharedModels.AccountModels;
+using DatabaseModels.DatabaseEnums;
 
 namespace BusinessLogic.Services
 {
@@ -226,15 +227,15 @@ namespace BusinessLogic.Services
 			return "ShoppingCart emptied";
 		}
 
-		public async Task<string> IncreaseShoppingCartProduct(int accountId, int productId)
+		public async Task<string> IncreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size)
 		{
-			await _accountRepository.IncreaseShoppingCartProduct(accountId, productId);
+			await _accountRepository.IncreaseShoppingCartProduct(accountId, productId, size);
 
 			var account = await _accountRepository.GetAccountById(accountId);
 
 			if (account != null)
 			{
-				var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId);
+				var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId &&  x.Size == size);
 				if (product != null)
 				{
 					product.Quantity++;
@@ -247,15 +248,15 @@ namespace BusinessLogic.Services
 
 		}
 
-		public async Task<string> DecreaseShoppingCartProduct(int accountId, int productId)
+		public async Task<string> DecreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size)
 		{
-			await _accountRepository.DecreaseShoppingCartProduct(accountId, productId);
+			await _accountRepository.DecreaseShoppingCartProduct(accountId, productId, size);
 
 			var account = await _accountRepository.GetAccountById(accountId);
 
 			if (account != null)
 			{
-				var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId);
+				var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId && x.Size == size);
 				if (product != null)
 				{
 					product.Quantity--;
@@ -267,14 +268,14 @@ namespace BusinessLogic.Services
 			return "Account could not be found";
 		}
 
-		public async Task<string> DeleteCartItemFromShoppingCart(int accountId, int productId)
+		public async Task<string> DeleteCartItemFromShoppingCart(int accountId, int productId, DatabaseEnums.Size size)
 		{
-			await _accountRepository.DeleteCartItemFromShoppingCart(accountId, productId);
+			await _accountRepository.DeleteCartItemFromShoppingCart(accountId, productId, size);
 
 			var account = await _accountRepository.GetAccountById(accountId);
 			if (account != null)
 			{
-				var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId);
+				var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId && x.Size == size);
 				if (product != null)
 				{
 					account.ShoppingCart.CartItems.Remove(product); 

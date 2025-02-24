@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DatabaseModels.DatabaseEnums;
 using DatabaseModels.Models;
 using SharedModels.AccountModels;
 
@@ -26,8 +27,8 @@ namespace DataAccess.Interfaces
 		Task<ShoppingCart> AddProductToShoppingCart(AddProductToShoppingCartModel model);
 		Task UpdateAccount(Account accountId);
 		Task EmptyShoppingCart(int accountId);
-		Task IncreaseShoppingCartProduct(int accountId, int productId);
-		Task DecreaseShoppingCartProduct(int accountId, int productId);
-		Task DeleteCartItemFromShoppingCart(int accountId, int productId);
+		Task IncreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size);
+		Task DecreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size);
+		Task DeleteCartItemFromShoppingCart(int accountId, int productId, DatabaseEnums.Size size);
 	}
 }

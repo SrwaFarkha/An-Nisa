@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
+using DatabaseModels.DatabaseEnums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -139,7 +140,6 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok(addedProductToShoppingCart);
 		}
 
-        [Authorize]
         [HttpPost("shoppingcart/empty/{accountId}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> EmptyShoppingCart(int accountId)
@@ -148,27 +148,27 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok(result);
 		}
 
-        [HttpPost("shoppingcart/increase/{accountId}/{productId}")]
+        [HttpPost("shoppingcart/increase/{accountId}/{productId}/{size}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public async Task<IActionResult> IncreaseQuantity(int accountId, int productId)
+		public async Task<IActionResult> IncreaseQuantity(int accountId, int productId, DatabaseEnums.Size size)
 		{
-			var result = await _accountService.IncreaseShoppingCartProduct(accountId, productId);
+			var result = await _accountService.IncreaseShoppingCartProduct(accountId, productId, size);
 			return Ok(result);
 		}
 
-        [HttpPost("shoppingcart/decrease/{accountId}/{productId}")]
+        [HttpPost("shoppingcart/decrease/{accountId}/{productId}/{size}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public async Task<IActionResult> DecreaseQuantity(int accountId, int productId)
+		public async Task<IActionResult> DecreaseQuantity(int accountId, int productId, DatabaseEnums.Size size)
 		{
-			var result = await _accountService.DecreaseShoppingCartProduct(accountId, productId);
+			var result = await _accountService.DecreaseShoppingCartProduct(accountId, productId, size);
 			return Ok(result);
 		}
 
         [HttpPost("shoppingcart/delete-cartitem/{accountId}/{productId}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		public async Task<IActionResult> DeleteCartItemFromShoppingCart(int accountId, int productId)
+		public async Task<IActionResult> DeleteCartItemFromShoppingCart(int accountId, int productId, DatabaseEnums.Size size)
 		{
-			var result = await _accountService.DeleteCartItemFromShoppingCart(accountId, productId);
+			var result = await _accountService.DeleteCartItemFromShoppingCart(accountId, productId, size);
 			return Ok(result);
 
 		}
