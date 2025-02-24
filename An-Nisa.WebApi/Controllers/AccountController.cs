@@ -164,7 +164,7 @@ namespace An_Nisa.WebApi.Controllers
 			return Ok(result);
 		}
 
-        [HttpPost("shoppingcart/delete-cartitem/{accountId}/{productId}")]
+        [HttpPost("shoppingcart/delete-cartitem/{accountId}/{productId}/{size}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> DeleteCartItemFromShoppingCart(int accountId, int productId, DatabaseEnums.Size size)
 		{
