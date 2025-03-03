@@ -243,7 +243,7 @@ namespace DataAccess.Repositories
 			}
 		}
 
-		public async Task IncreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size)
+		public async Task<bool> IncreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size)
 		{
 			var account = await _dbContext.Accounts
 				.Include(x => x.ShoppingCart)
@@ -252,17 +252,19 @@ namespace DataAccess.Repositories
 				.FirstOrDefaultAsync(x => x.AccountId == accountId);
 
 			var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId && x.Size == size);
+            if (product == null)
+            {
+                return false;
+            }
 
-			if (product != null)
-			{
-				product.Quantity++;
-			}
+			product.Quantity++;
 
 			await _dbContext.SaveChangesAsync();
+			return true;
 
 		}
 
-		public async Task DecreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size)
+		public async Task<bool> DecreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size)
 		{
 			var account = await _dbContext.Accounts
 				.Include(x => x.ShoppingCart)
@@ -271,13 +273,24 @@ namespace DataAccess.Repositories
 				.FirstOrDefaultAsync(x => x.AccountId == accountId);
 
 			var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId && x.Size == size);
-
-			if (product != null)
+			if (product == null) 
 			{
-				product.Quantity--;
+				return false;
 			}
 
-			await _dbContext.SaveChangesAsync();
+
+			if(product.Quantity == 1)
+			{
+                account.ShoppingCart.CartItems.Remove(product);
+            }
+			else
+			{
+                product.Quantity--;
+
+            }
+
+            await _dbContext.SaveChangesAsync();
+			return true;
 		}
 
 		public async Task DeleteCartItemFromShoppingCart(int accountId, int productId, DatabaseEnums.Size size)

@@ -27,8 +27,8 @@ namespace DataAccess.Interfaces
 		Task<ShoppingCart> AddProductToShoppingCart(AddProductToShoppingCartModel model);
 		Task UpdateAccount(Account accountId);
 		Task EmptyShoppingCart(int accountId);
-		Task IncreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size);
-		Task DecreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size);
+		Task<bool> IncreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size);
+		Task<bool> DecreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size);
 		Task DeleteCartItemFromShoppingCart(int accountId, int productId, DatabaseEnums.Size size);
 	}
 }

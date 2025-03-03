@@ -227,45 +227,52 @@ namespace BusinessLogic.Services
 			return "ShoppingCart emptied";
 		}
 
-		public async Task<string> IncreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size)
+		public async Task<bool> IncreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size)
 		{
-			await _accountRepository.IncreaseShoppingCartProduct(accountId, productId, size);
+			var result = await _accountRepository.IncreaseShoppingCartProduct(accountId, productId, size);
+			return result;
+			//var account = await _accountRepository.GetAccountById(accountId);
 
-			var account = await _accountRepository.GetAccountById(accountId);
+			//if (account != null)
+			//{
+			//	var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId &&  x.Size == size);
+			//	if (product != null)
+			//	{
+			//		product.Quantity++;
+			//		return "Product item increased";
+			//	}
+			//	return "Product could not be found";
+			//}
 
-			if (account != null)
-			{
-				var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId &&  x.Size == size);
-				if (product != null)
-				{
-					product.Quantity++;
-					return "Product item increased";
-				}
-				return "Product could not be found";
-			}
-
-			return "Account could not be found";
+			//return "Account could not be found";
 
 		}
 
-		public async Task<string> DecreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size)
+		public async Task<bool> DecreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size)
 		{
-			await _accountRepository.DecreaseShoppingCartProduct(accountId, productId, size);
+			var result = await _accountRepository.DecreaseShoppingCartProduct(accountId, productId, size);
+			return result;
+			//if(result == false)
+			//{
+			//	return "Product could not be deacreased";
+			//}
+			//return "Product item decreased";
+			//var account = await _accountRepository.GetAccountById(accountId);
 
-			var account = await _accountRepository.GetAccountById(accountId);
+			//if (account != null)
+			//{
+			//	var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId && x.Size == size);
+			//	if (product != null)
+			//	{
+			//		product.Quantity--;
+			//		return "Product item decreased";
+			//	}
 
-			if (account != null)
-			{
-				var product = account.ShoppingCart.CartItems.FirstOrDefault(x => x.ProductId == productId && x.Size == size);
-				if (product != null)
-				{
-					product.Quantity--;
-					return "Product item decreased";
-				}
-				return "Product could not be found";
-			}
 
-			return "Account could not be found";
+			//	return "Product could not be found";
+			//}
+
+			//return "Account could not be found";
 		}
 
 		public async Task<string> DeleteCartItemFromShoppingCart(int accountId, int productId, DatabaseEnums.Size size)

@@ -153,7 +153,13 @@ namespace An_Nisa.WebApi.Controllers
 		public async Task<IActionResult> IncreaseQuantity(int accountId, int productId, DatabaseEnums.Size size)
 		{
 			var result = await _accountService.IncreaseShoppingCartProduct(accountId, productId, size);
-			return Ok(result);
+			
+			if(result == false)
+			{
+				return NotFound("Product could not be increased!");
+			}
+			
+			return Ok("Product increased!");
 		}
 
         [HttpPost("shoppingcart/decrease/{accountId}/{productId}/{size}")]
@@ -161,8 +167,13 @@ namespace An_Nisa.WebApi.Controllers
 		public async Task<IActionResult> DecreaseQuantity(int accountId, int productId, DatabaseEnums.Size size)
 		{
 			var result = await _accountService.DecreaseShoppingCartProduct(accountId, productId, size);
-			return Ok(result);
-		}
+            if (result == false)
+            {
+                return NotFound("Product could not be decreased!");
+            }
+
+            return Ok("Product decreased!");
+        }
 
         [HttpPost("shoppingcart/delete-cartitem/{accountId}/{productId}/{size}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
