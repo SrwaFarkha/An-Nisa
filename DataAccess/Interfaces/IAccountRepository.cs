@@ -23,12 +23,7 @@ namespace DataAccess.Interfaces
 		Task CreateAddress(Address newAddress);
 		Task DeleteAccount(int addressId);
 		Task UpdateAddress(int addressId, UpdateAddressModel model);
-		Task<ShoppingCart> GetShoppingCartByAccountId(int accountId);
-		Task<ShoppingCart> AddProductToShoppingCart(AddProductToShoppingCartModel model);
 		Task UpdateAccount(Account accountId);
-		Task EmptyShoppingCart(int accountId);
-		Task<bool> IncreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size);
-		Task<bool> DecreaseShoppingCartProduct(int accountId, int productId, DatabaseEnums.Size size);
-		Task DeleteCartItemFromShoppingCart(int accountId, int productId, DatabaseEnums.Size size);
+
 	}
 }
